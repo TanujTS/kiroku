@@ -1,3 +1,4 @@
+import { eq } from 'drizzle-orm';
 import db from '../db/index';
 import { usersTable } from '../models/user.model'
 import { ApiResponse } from '../utils/ApiReponse';
@@ -18,6 +19,9 @@ const createUser = asyncHandler(async (req, res) => {
     const user = await db.insert(usersTable).values({
         name, email
     })
+    .returning({
+        name, email
+    })
     return res
     .status(201)
     .json(
@@ -25,8 +29,21 @@ const createUser = asyncHandler(async (req, res) => {
     )
 })
 
+const getUserById = asyncHandler(async (req, res) => {
+    const id = req.params.id;
+    const [user] = await db.select().from(usersTable).where(table => eq(table.id, id)).limit(1);
+    return res
+    .status(200)
+    .json(
+        new ApiResponse(200, user, "Fetched user profile succesfully!")
+    )
+})
+
+
+
 
 export {
     getAllUsers,
-    createUser
+    createUser,
+    getUserById
 }
