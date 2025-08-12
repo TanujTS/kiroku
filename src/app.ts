@@ -18,11 +18,6 @@ app.use(express.static("public"))
 
 
 //router
-import usersRouter from './routes/user.routes';
-import blogRouter from './routes/blog.routes'
-
-app.use('/users', usersRouter);
-app.use('/blogs', blogRouter)
 
 
 //routes declaration
