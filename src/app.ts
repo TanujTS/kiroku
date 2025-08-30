@@ -1,7 +1,11 @@
+import { toNodeHandler } from "better-auth/node";
 import cors from "cors";
 import express from 'express';
+import { auth } from "./utils/auth";
 
 const app = express();
+
+app.all("/api/auth/*", toNodeHandler(auth));
 
 //Middlewares
 app.use(cors({
