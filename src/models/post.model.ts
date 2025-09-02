@@ -1,6 +1,6 @@
 import { pgTable, uuid, varchar, text, timestamp, index, pgEnum } from "drizzle-orm/pg-core";
 import { sql } from "drizzle-orm";
-import { Users } from "./user.model";
+import { users } from "./user.model";
 
 export const visibilityEnums = pgEnum("visibility", ["public", "private", "unlisted"]);
 
@@ -8,7 +8,7 @@ export const Posts = pgTable(
   "posts",
   {
     id: uuid().defaultRandom().primaryKey(),
-    author_id: text().references(() => Users.id, { onDelete: "cascade" }).notNull(),
+    author_id: text().references(() => users.id, { onDelete: "cascade" }).notNull(),
     title: varchar({ length: 255 }).notNull(),
     content: text().notNull(),
     visibility: visibilityEnums().default("public").notNull(),

@@ -1,9 +1,9 @@
 import { pgTable, uuid, varchar, text, timestamp } from "drizzle-orm/pg-core";
-import { Users } from "./user.model";
+import { users } from "./user.model";
 
 export const Collections = pgTable("collections", {
   id: uuid().defaultRandom().primaryKey(),
-  owner_id: text().references(() => Users.id, { onDelete: "cascade" }).notNull(),
+  owner_id: text().references(() => users.id, { onDelete: "cascade" }).notNull(),
   name: varchar({ length: 255 }).notNull(),
   description: text(),
   created_at: timestamp().defaultNow().notNull(),
