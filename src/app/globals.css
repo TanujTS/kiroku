@@ -59,3 +59,15 @@
     @apply bg-background text-foreground font-inter antialiased transition-colors duration-300;
   }
 }
+
+.font-nunito {
+  font-family: var(--font-nunito)
+}
+
+.font-space {
+  font-family: var(--font-space-grotesk)
+}
+
+.font-inter {
+  font-family: var(--font-inter)
+}
