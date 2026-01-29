@@ -1,23 +1,20 @@
 "use client";
 
 import { useState, useCallback, useRef } from "react";
-import ReactMarkdown from "react-markdown";
-import remarkGfm from "remark-gfm";
-import rehypeHighlight from "rehype-highlight";
 import { Button } from "@/components/ui/button";
-import { Tooltip, TooltipTrigger, TooltipContent } from "@/components/ui/tooltip";
-import { IconBold, IconItalic, IconCode, IconLink, IconList, IconListNumbers, IconQuote, IconH1, IconH2, IconPhoto, IconDeviceFloppy, IconSend } from "@tabler/icons-react";
+import { IconDeviceFloppy, IconSend, IconEye, IconEyeOff } from "@tabler/icons-react";
+import { EditorToolbar, MarkdownPreview, EmptyEditor } from "@/components/editor";
 
 export default function NewPost() {
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
     const [isPreview, setIsPreview] = useState(false);
     const [isSaving, setIsSaving] = useState(false);
+    const [hasStarted, setHasStarted] = useState(false);
     const textareaRef = useRef<HTMLTextAreaElement>(null);
 
     /**
      * Inserts markdown syntax at cursor position or wraps selected text.
-     * If no text is selected, places cursor between prefix and suffix.
      */
     const insertMarkdown = useCallback((prefix: string, suffix: string = "") => {
         const textarea = textareaRef.current;
@@ -37,15 +34,12 @@ export default function NewPost() {
 
         setContent(newText);
 
-        // Position cursor correctly after insertion
         setTimeout(() => {
             textarea.focus();
             if (hasSelection) {
-                // If text was selected, place cursor after the closing syntax
                 const newCursorPos = start + prefix.length + selectedText.length + suffix.length;
                 textarea.setSelectionRange(newCursorPos, newCursorPos);
             } else {
-                // If no selection, place cursor between prefix and suffix
                 const cursorPos = start + prefix.length;
                 textarea.setSelectionRange(cursorPos, cursorPos);
             }
@@ -53,44 +47,19 @@ export default function NewPost() {
     }, [content]);
 
     /**
-     * Toolbar button configuration
-     * Each button has an icon and markdown syntax to insert
-     */
-    const toolbarButtons = [
-        { icon: IconH1, action: () => insertMarkdown("# "), title: "Heading 1" },
-        { icon: IconH2, action: () => insertMarkdown("## "), title: "Heading 2" },
-        { icon: IconBold, action: () => insertMarkdown("**", "**"), title: "Bold" },
-        { icon: IconItalic, action: () => insertMarkdown("*", "*"), title: "Italic" },
-        { icon: IconCode, action: () => insertMarkdown("`", "`"), title: "Inline Code" },
-        { icon: IconLink, action: () => insertMarkdown("[", "](url)"), title: "Link" },
-        { icon: IconPhoto, action: () => insertMarkdown("![alt](", ")"), title: "Image" },
-        { icon: IconList, action: () => insertMarkdown("- "), title: "Bullet List" },
-        { icon: IconListNumbers, action: () => insertMarkdown("1. "), title: "Numbered List" },
-        { icon: IconQuote, action: () => insertMarkdown("> "), title: "Quote" },
-    ];
-
-    /**
      * Handle form submission
-     * This would send data to your API route
      */
     const handleSubmit = async (published: boolean) => {
         setIsSaving(true);
 
         try {
-            // TODO: Create an API route at /api/posts to handle this
             const response = await fetch("/api/posts", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    title,
-                    content, // Store raw markdown - render on display
-                    published,
-                }),
+                body: JSON.stringify({ title, content, published }),
             });
 
             if (response.ok) {
-                // Redirect to the post or dashboard
-                // router.push("/posts");
                 alert(published ? "Published!" : "Draft saved!");
             }
         } catch (error) {
@@ -100,24 +69,35 @@ export default function NewPost() {
         }
     };
 
+    const handleStartWriting = () => {
+        setHasStarted(true);
+        setTimeout(() => textareaRef.current?.focus(), 0);
+    };
+
+    // Show empty state if user hasn't started
+    const showEmptyState = !hasStarted && !content.trim() && !title.trim();
+
     return (
         <div className="min-h-screen bg-background">
-            {/* Header with actions */}
-            <header className="sticky top-0 z-10 border-b border-border bg-background backdrop-blur-sm">
+            {/* Header */}
+            <header className="sticky top-0 z-10 border-b border-border bg-background/95 backdrop-blur-sm">
                 <div className="mx-auto max-w-4xl flex items-center justify-between px-6 py-4">
                     <h1 className="text-lg font-space font-semibold text-foreground">New Post</h1>
 
                     <div className="flex items-center gap-3">
-                        {/* Toggle between edit and preview */}
+                        {/* Preview toggle */}
                         <Button
                             variant="ghost"
                             size="sm"
                             onClick={() => setIsPreview(!isPreview)}
                         >
-                            {isPreview ? "Edit" : "Preview"}
+                            {isPreview ? (
+                                <><IconEyeOff className="size-4" /> Edit</>
+                            ) : (
+                                <><IconEye className="size-4" /> Preview</>
+                            )}
                         </Button>
 
-                        {/* Save as draft */}
                         <Button
                             variant="outline"
                             size="sm"
@@ -128,7 +108,6 @@ export default function NewPost() {
                             Save Draft
                         </Button>
 
-                        {/* Publish */}
                         <Button
                             size="sm"
                             onClick={() => handleSubmit(true)}
@@ -141,70 +120,47 @@ export default function NewPost() {
                 </div>
             </header>
 
-            {/* Main editor area */}
+            {/* Main content */}
             <main className="mx-auto max-w-4xl px-6 py-8">
-                {/* Title input - clean, minimal like Notion */}
+                {/* Title input */}
                 <input
                     type="text"
                     placeholder="Untitled"
                     value={title}
-                    onChange={(e) => setTitle(e.target.value)}
+                    onChange={(e) => {
+                        setTitle(e.target.value);
+                        if (e.target.value.trim()) setHasStarted(true);
+                    }}
                     className="w-full bg-transparent text-4xl font-space font-bold text-foreground placeholder:text-muted-foreground/50 outline-none mb-8"
                 />
 
-                {/* Toolbar - only show in edit mode */}
-                {!isPreview && (
-                    <div className="flex items-center gap-1 pb-4 mb-4 border-b border-border overflow-x-auto">
-                        {toolbarButtons.map((btn, index) => (
-                            <Tooltip key={index}>
-                                <TooltipTrigger asChild>
-                                    <button
-                                        onClick={btn.action}
-                                        className="p-2 rounded-md text-muted-foreground hover:text-primary hover:bg-primary/10 active:bg-primary/20 transition-all duration-200"
-                                    >
-                                        <btn.icon className="size-5" />
-                                    </button>
-                                </TooltipTrigger>
-                                <TooltipContent>{btn.title}</TooltipContent>
-                            </Tooltip>
-                        ))}
-
-                        {/* Code block button */}
-                        <Tooltip>
-                            <TooltipTrigger asChild>
-                                <button
-                                    onClick={() => insertMarkdown("```\n", "\n```")}
-                                    className="p-2 rounded-md text-muted-foreground hover:text-primary hover:bg-primary/10 active:bg-primary/20 transition-all duration-200 ml-2"
-                                >
-                                    <span className="text-xs font-mono">{"{ }"}</span>
-                                </button>
-                            </TooltipTrigger>
-                            <TooltipContent>Code Block</TooltipContent>
-                        </Tooltip>
+                {showEmptyState ? (
+                    <EmptyEditor onStartWriting={handleStartWriting} />
+                ) : isPreview ? (
+                    /* Preview mode */
+                    <div>
+                        {content.trim() ? (
+                            <MarkdownPreview content={content} />
+                        ) : (
+                            <p className="text-muted-foreground/50 italic">
+                                Nothing to preview yet...
+                            </p>
+                        )}
                     </div>
-                )}
-
-                {/* Editor / Preview area */}
-                {isPreview ? (
-                    // Preview mode - rendered markdown
-                    <article className="prose prose-kiroku dark:prose-invert max-w-none">
-                        <ReactMarkdown
-                            remarkPlugins={[remarkGfm]}
-                            rehypePlugins={[rehypeHighlight]}
-                        >
-                            {content || "*Start writing to see preview...*"}
-                        </ReactMarkdown>
-                    </article>
                 ) : (
-                    // Edit mode - textarea that auto-expands
-                    <textarea
-                        placeholder="Start writing your story... (Markdown supported)"
-                        value={content}
-                        ref={textareaRef}
-                        onChange={(e) => setContent(e.target.value)}
-                        className="w-full min-h-[40vh] bg-transparent text-foreground placeholder:text-muted-foreground/50 outline-none resize-none font-inter text-lg leading-relaxed overflow-hidden"
-                        style={{ fieldSizing: 'content' } as React.CSSProperties}
-                    />
+                    /* Editor mode */
+                    <div>
+                        <EditorToolbar onInsert={insertMarkdown} />
+
+                        <textarea
+                            ref={textareaRef}
+                            placeholder="Start writing your story... (Markdown supported)"
+                            value={content}
+                            onChange={(e) => setContent(e.target.value)}
+                            className="w-full min-h-[50vh] bg-transparent text-foreground placeholder:text-muted-foreground/50 outline-none resize-none font-inter text-lg leading-relaxed"
+                            style={{ fieldSizing: 'content' } as React.CSSProperties}
+                        />
+                    </div>
                 )}
             </main>
         </div>
