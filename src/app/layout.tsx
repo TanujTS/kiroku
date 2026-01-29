@@ -18,6 +18,9 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: "Kiroku",
   description: "where your story finds its breath",
+  icons: {
+    icon: '/kiroku.svg'
+  }
 };
 
 export default function RootLayout({
