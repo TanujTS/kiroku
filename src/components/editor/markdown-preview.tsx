@@ -11,7 +11,7 @@ interface MarkdownPreviewProps {
 
 export function MarkdownPreview({ content, className = "" }: MarkdownPreviewProps) {
     return (
-        <article className={`prose prose-kiroku dark:prose-invert max-w-none ${className}`}>
+        <article className={`prose max-w-none ${className}`}>
             <ReactMarkdown
                 remarkPlugins={[remarkGfm]}
                 rehypePlugins={[rehypeHighlight]}

@@ -78,10 +78,10 @@ export default function NewPost() {
     const showEmptyState = !hasStarted && !content.trim() && !title.trim();
 
     return (
-        <div className="min-h-screen bg-background">
+        <div className="page-shell">
             {/* Header */}
-            <header className="sticky top-0 z-10 border-b border-border bg-background/95 backdrop-blur-sm">
-                <div className="mx-auto max-w-4xl flex items-center justify-between px-6 py-4">
+            <header className="page-header">
+                <div className="page-container flex items-center justify-between py-4">
                     <h1 className="text-lg font-space font-semibold text-foreground">New Post</h1>
 
                     <div className="flex items-center gap-3">
@@ -121,7 +121,7 @@ export default function NewPost() {
             </header>
 
             {/* Main content */}
-            <main className="mx-auto max-w-4xl px-6 py-8">
+            <main className="page-container py-8">
                 {/* Title input */}
                 <input
                     type="text"
@@ -157,7 +157,7 @@ export default function NewPost() {
                             placeholder="Start writing your story... (Markdown supported)"
                             value={content}
                             onChange={(e) => setContent(e.target.value)}
-                            className="w-full min-h-[50vh] bg-transparent text-foreground placeholder:text-muted-foreground/50 outline-none resize-none font-inter text-lg leading-relaxed"
+                            className="w-full min-h-[50vh] bg-transparent text-foreground placeholder:text-muted-foreground/50 outline-none resize-none text-lg leading-relaxed"
                             style={{ fieldSizing: 'content' } as React.CSSProperties}
                         />
                     </div>

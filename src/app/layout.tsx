@@ -1,18 +1,16 @@
 import type { Metadata } from "next";
-import { Space_Grotesk, Nunito, Inter } from "next/font/google";
+import { Space_Grotesk, Nunito } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 
 const spaceGrotesk = Space_Grotesk({
-  variable: '--font-space-grotesk'
+  subsets: ["latin"],
+  variable: "--font-space-grotesk",
 })
 
 const nunito = Nunito({
-  variable: "--font-nunito"
-})
-
-const inter = Inter({
-  variable: '--font-inter'
+  subsets: ["latin"],
+  variable: "--font-nunito",
 })
 
 export const metadata: Metadata = {
@@ -29,17 +27,18 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body
-        className={`${spaceGrotesk.variable} ${nunito.variable} ${inter.variable} antialiased`}
+        className={`${spaceGrotesk.variable} ${nunito.variable} antialiased`}
       >
         <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-          >
-            {children}
-          </ThemeProvider>
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );
