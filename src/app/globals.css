@@ -69,7 +69,22 @@
   --radius-xl:   calc(var(--radius) * 1.5);   /* ~1.125rem  */
   --radius-2xl:  calc(var(--radius) * 2);     /* ~1.5rem    */
   --radius-3xl:  calc(var(--radius) * 2.67);  /* ~2rem      */
+  --radius-3xl:  calc(var(--radius) * 2.67);  /* ~2rem      */
   --radius-full: 9999px;                      /* pill / badge */
+
+  /* ── Animations ── */
+  --animate-star-movement-bottom: star-movement-bottom 6s linear infinite alternate;
+  --animate-star-movement-top: star-movement-top 6s linear infinite alternate;
+}
+
+@keyframes star-movement-bottom {
+  0% { transform: translate(0%, 0%); opacity: 1; }
+  100% { transform: translate(-100%, 0%); opacity: 0; }
+}
+
+@keyframes star-movement-top {
+  0% { transform: translate(0%, 0%); opacity: 1; }
+  100% { transform: translate(100%, 0%); opacity: 0; }
 }
 
 
