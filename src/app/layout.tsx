@@ -5,13 +5,13 @@ import "./globals.css";
 const unbounded = Unbounded({
   subsets: ['latin'],
   variable: '--font-unbounded',
-  weight: ['700']
+  weight: ['300', '600', '500', '700']
 })
 
-const spaceGrotesk = Space_Grotesk({ 
-  subsets: ['latin'], 
+const spaceGrotesk = Space_Grotesk({
+  subsets: ['latin'],
   variable: '--font-space-grotesk',
-  weight: ['400', '500', '600'] 
+  weight: ['400', '500', '600']
 });
 
 
