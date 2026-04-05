@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { USER_PROFILE } from "./dummy-data";
-import { BookOpen, Files, Archive, Plus, Feather } from "lucide-react";
+import { IconBook as BookOpen, IconFiles as Files, IconArchive as Archive, IconPlus as Plus, IconFeather as Feather } from "@tabler/icons-react";
 
 export function Sidebar() {
   const pathname = usePathname();

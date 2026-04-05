@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Search, Bell, Settings } from "lucide-react";
+import { IconSearch as Search, IconBell as Bell, IconSettings as Settings } from "@tabler/icons-react";
 import { Input } from "@/components/ui/input";
 
 export function TopNav() {

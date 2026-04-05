@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Moon, Sun, Type, Library } from "lucide-react";
+import { IconMoon as Moon, IconSun as Sun, IconTypography as Type, IconBooks as Library } from "@tabler/icons-react";
 import { Card } from "@/components/ui/card";
 
 const MotionCard = motion.create(Card);

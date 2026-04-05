@@ -4,6 +4,8 @@ trigger: always_on
 
 # Kiroku — Frontend Design System Rules
 
+Always use `bun` for this project. Do NOT use npm or any other package manager.
+
 ## Stack
 - Framework: Next.js (App Router)
 - Styling: Tailwind CSS v4

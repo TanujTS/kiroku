@@ -3,7 +3,7 @@
 import { DUMMY_POSTS } from "./dummy-data";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
-import { Lock, Globe, MoveRight, Link as LinkIcon, Edit3, MoreHorizontal, Sparkles } from "lucide-react";
+import { IconLock as Lock, IconWorld as Globe, IconArrowRight as MoveRight, IconLink as LinkIcon, IconPencil as Edit3, IconDots as MoreHorizontal, IconSparkles as Sparkles } from "@tabler/icons-react";
 import { Button } from "@/components/ui/button";
 
 function getStatusIcon(status: string) {

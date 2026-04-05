@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Globe, Lock, Link as LinkIcon, ShieldCheck, Share2, EyeOff } from "lucide-react";
+import { IconWorld as Globe, IconLock as Lock, IconLink as LinkIcon, IconShieldCheck as ShieldCheck, IconShare as Share2, IconEyeOff as EyeOff } from "@tabler/icons-react";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { motion } from "framer-motion";
 

@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { Bell, Settings, User } from "lucide-react";
+
 import { motion, Variants } from "framer-motion";
 import StarBorder from "@/components/StarBorder";
 import BlurText from "@/components/BlurText";
