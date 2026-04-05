@@ -1,0 +1,139 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ENUMS
+
+enum Role {
+  USER
+  ADMIN
+}
+
+enum Visibility {
+  PRIVATE
+  LINK_ONLY
+  PUBLIC
+}
+
+// BETTER AUTH TABLES
+
+model User {
+  id            String   @id @default(uuid())
+  name          String
+  email         String   @unique
+  emailVerified Boolean  @default(false)
+  image         String?
+  role          Role     @default(USER)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  sessions    Session[]
+  accounts    Account[]
+  posts       Post[]
+  collections Collection[]
+
+  @@map("user")
+}
+
+model Session {
+  id        String   @id @default(uuid())
+  expiresAt DateTime
+  token     String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  ipAddress String?
+  userAgent String?
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@map("session")
+}
+
+model Account {
+  id                    String    @id @default(uuid())
+  accountId             String
+  providerId            String
+  userId                String
+  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  accessToken           String?
+  refreshToken          String?
+  idToken               String?
+  accessTokenExpiresAt  DateTime?
+  refreshTokenExpiresAt DateTime?
+  scope                 String?
+  password              String?
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+
+  @@index([userId])
+  @@map("account")
+}
+
+model Verification {
+  id         String   @id @default(uuid())
+  identifier String
+  value      String
+  expiresAt  DateTime
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@index([identifier])
+  @@map("verification")
+}
+
+// APP TABLES
+
+model Post {
+  id          String     @id @default(uuid())
+  authorId    String
+  author      User       @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  title       String
+  slug        String     @unique
+  coverImage  String?
+  content     String
+  visibility  Visibility @default(PRIVATE)
+  publishedAt DateTime?
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+
+  // many-to-many via join table
+  collections PostCollection[]
+
+  @@index([authorId])
+  @@map("post")
+}
+
+model Collection {
+  id         String   @id @default(uuid())
+  authorId   String
+  author     User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  title      String
+  coverImage String?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  // many-to-many via join table
+  posts PostCollection[]
+
+  @@index([authorId])
+  @@map("collection")
+}
+
+// ─── Join Tables ──────────────────────────────────────────────────────────────
+
+model PostCollection {
+  postId       String
+  post         Post       @relation(fields: [postId], references: [id], onDelete: Cascade)
+  collectionId String
+  collection   Collection @relation(fields: [collectionId], references: [id], onDelete: Cascade)
+  addedAt      DateTime   @default(now()) // useful for ordering posts within a collection
+
+  @@id([postId, collectionId]) // composite PK, prevents duplicate entries
+  @@map("post_collection")
+}
