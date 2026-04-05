@@ -15,7 +15,7 @@ export default function JournalMode() {
   };
 
   return (
-    <section className="py-24 px-6 md:px-12 max-w-7xl mx-auto grid lg:grid-cols-2 gap-16 items-center">
+    <section className="min-h-dvh py-24 px-6 md:px-12 max-w-7xl mx-auto grid lg:grid-cols-2 gap-16 items-center content-center">
       {/* Left Column */}
       <motion.div 
         initial={{ opacity: 0, y: 40 }}
