@@ -9,68 +9,68 @@
 
 @theme inline {
   /* ── Surfaces & text ── */
-  --color-background:           var(--background);
-  --color-foreground:           var(--foreground);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
 
   /* ── Brand ── */
-  --color-primary:              var(--primary);
-  --color-primary-foreground:   var(--primary-foreground);
-  --color-secondary:            var(--secondary);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
   --color-secondary-foreground: var(--secondary-foreground);
 
   /* ── Cards / popovers ── */
-  --color-card:                 var(--card);
-  --color-card-foreground:      var(--card-foreground);
-  --color-popover:              var(--popover);
-  --color-popover-foreground:   var(--popover-foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
 
   /* ── Muted / accent ── */
-  --color-muted:                var(--muted);
-  --color-muted-foreground:     var(--muted-foreground);
-  --color-accent:               var(--accent);
-  --color-accent-foreground:    var(--accent-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
 
   /* ── Functional ── */
-  --color-destructive:          var(--destructive);
-  --color-border:               var(--border);
-  --color-input:                var(--input);
-  --color-ring:                 var(--ring);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
 
   /* ── Charts ── */
-  --color-chart-1:              var(--chart-1);
-  --color-chart-2:              var(--chart-2);
-  --color-chart-3:              var(--chart-3);
-  --color-chart-4:              var(--chart-4);
-  --color-chart-5:              var(--chart-5);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
 
   /* ── Sidebar ── */
-  --color-sidebar:                    var(--sidebar);
-  --color-sidebar-foreground:         var(--sidebar-foreground);
-  --color-sidebar-primary:            var(--sidebar-primary);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
   --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-accent:             var(--sidebar-accent);
-  --color-sidebar-accent-foreground:  var(--sidebar-accent-foreground);
-  --color-sidebar-border:             var(--sidebar-border);
-  --color-sidebar-ring:               var(--sidebar-ring);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
 
   /* ── Typography ── */
   --font-heading: var(--font-unbounded);
-  --font-sans:    var(--font-space-grotesk);
-  --font-mono:    ui-monospace, "Cascadia Code", "Source Code Pro", Menlo, monospace;
+  --font-sans: var(--font-space-grotesk);
+  --font-mono: ui-monospace, "Cascadia Code", "Source Code Pro", Menlo, monospace;
 
   /* ── Border radius scale ──
      --radius is the base token (set in :root).
      All other steps derive from it so you can tune everything
      by changing one value.                                    */
   --radius-none: 0px;
-  --radius-sm:   calc(var(--radius) * 0.5);   /* ~0.375rem  */
-  --radius-md:   calc(var(--radius) * 0.75);  /* ~0.5625rem */
-  --radius-lg:   var(--radius);               /* 0.75rem    */
-  --radius-xl:   calc(var(--radius) * 1.5);   /* ~1.125rem  */
-  --radius-2xl:  calc(var(--radius) * 2);     /* ~1.5rem    */
-  --radius-3xl:  calc(var(--radius) * 2.67);  /* ~2rem      */
-  --radius-3xl:  calc(var(--radius) * 2.67);  /* ~2rem      */
-  --radius-full: 9999px;                      /* pill / badge */
+  --radius-sm: calc(var(--radius) * 0.5); /* ~0.375rem  */
+  --radius-md: calc(var(--radius) * 0.75); /* ~0.5625rem */
+  --radius-lg: var(--radius); /* 0.75rem    */
+  --radius-xl: calc(var(--radius) * 1.5); /* ~1.125rem  */
+  --radius-2xl: calc(var(--radius) * 2); /* ~1.5rem    */
+  --radius-3xl: calc(var(--radius) * 2.67); /* ~2rem      */
+  --radius-3xl: calc(var(--radius) * 2.67); /* ~2rem      */
+  --radius-full: 9999px; /* pill / badge */
 
   /* ── Animations ── */
   --animate-star-movement-bottom: star-movement-bottom 6s linear infinite alternate;
@@ -78,112 +78,125 @@
 }
 
 @keyframes star-movement-bottom {
-  0% { transform: translate(0%, 0%); opacity: 1; }
-  100% { transform: translate(-100%, 0%); opacity: 0; }
+  0% {
+    transform: translate(0%, 0%);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-100%, 0%);
+    opacity: 0;
+  }
 }
 
 @keyframes star-movement-top {
-  0% { transform: translate(0%, 0%); opacity: 1; }
-  100% { transform: translate(100%, 0%); opacity: 0; }
+  0% {
+    transform: translate(0%, 0%);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(100%, 0%);
+    opacity: 0;
+  }
 }
-
 
 :root {
   /* ── Brand palette ── */
-  --primary:              #92A9E1;   /* Lavender Haze        */
-  --primary-foreground:   #ffffff;
-  --secondary:            #465D90;   /* Deep Indigo          */
+  --primary: #92a9e1; /* Lavender Haze        */
+  --primary-foreground: #ffffff;
+  --secondary: #465d90; /* Deep Indigo          */
   --secondary-foreground: #ffffff;
 
   /* ── Surfaces ── */
-  --background:           #FEF9EF;   /* Warm parchment       */
-  --foreground:           #5F5E5E;   /* Soft graphite        */
-  --card:                 #FEF9EF;
-  --card-foreground:      #5F5E5E;
-  --popover:              #FFFFFF;
-  --popover-foreground:   #5F5E5E;
+  --background: #fef9ef; /* Warm parchment       */
+  --foreground: #5f5e5e; /* Soft graphite        */
+  --card: #fef9ef;
+  --card-foreground: #5f5e5e;
+  --popover: #ffffff;
+  --popover-foreground: #5f5e5e;
 
   /* ── Muted / accent — use the slightly darker surface ── */
-  --muted:                #F8F3E9;   /* Surface container    */
-  --muted-foreground:     #9A9898;
-  --accent:               #F0EBE0;
-  --accent-foreground:    #465D90;
+  --muted: #f8f3e9; /* Surface container    */
+  --muted-foreground: #9a9898;
+  --accent: #f0ebe0;
+  --accent-foreground: #465d90;
 
   /* ── Functional ── */
-  --destructive:          #D9534F;
+  --destructive: #d9534f;
 
   /* ── Borders & inputs — whisper-quiet ── */
-  --border:               #E4DDD1;
-  --input:                #EDE9E0;
-  --ring:                 #92A9E1;
+  --border: #e4ddd1;
+  --input: #ede9e0;
+  --ring: #92a9e1;
 
   /* ── Base radius token (drives the full scale above) ── */
   --radius: 0.75rem;
 
   /* ── Charts — brand-tinted ramp ── */
-  --chart-1: #92A9E1;
-  --chart-2: #6B8DD4;
-  --chart-3: #465D90;
-  --chart-4: #B8C8ED;
-  --chart-5: #2D4070;
+  --chart-1: #92a9e1;
+  --chart-2: #6b8dd4;
+  --chart-3: #465d90;
+  --chart-4: #b8c8ed;
+  --chart-5: #2d4070;
 
   /* ── Sidebar ── */
-  --sidebar:                    #F8F3E9;
-  --sidebar-foreground:         #5F5E5E;
-  --sidebar-primary:            #92A9E1;
+  --sidebar: #f8f3e9;
+  --sidebar-foreground: #5f5e5e;
+  --sidebar-primary: #92a9e1;
   --sidebar-primary-foreground: #ffffff;
-  --sidebar-accent:             #EDE9E0;
-  --sidebar-accent-foreground:  #465D90;
-  --sidebar-border:             #E4DDD1;
-  --sidebar-ring:               #92A9E1;
+  --sidebar-accent: #ede9e0;
+  --sidebar-accent-foreground: #465d90;
+  --sidebar-border: #e4ddd1;
+  --sidebar-ring: #92a9e1;
 }
 
 .dark {
-  --background:           #1A1916;
-  --foreground:           #E8E3DA;
-  --card:                 #242220;
-  --card-foreground:      #E8E3DA;
-  --popover:              #242220;
-  --popover-foreground:   #E8E3DA;
+  --background: #1a1916;
+  --foreground: #e8e3da;
+  --card: #242220;
+  --card-foreground: #e8e3da;
+  --popover: #242220;
+  --popover-foreground: #e8e3da;
 
-  --primary:              #7B97D6;   /* slightly desaturated for dark */
-  --primary-foreground:   #ffffff;
-  --secondary:            #5C75B0;
+  --primary: #7b97d6; /* slightly desaturated for dark */
+  --primary-foreground: #ffffff;
+  --secondary: #5c75b0;
   --secondary-foreground: #ffffff;
 
-  --muted:                #2C2A27;
-  --muted-foreground:     #9A9898;
-  --accent:               #2C2A27;
-  --accent-foreground:    #B8C8ED;
+  --muted: #2c2a27;
+  --muted-foreground: #9a9898;
+  --accent: #2c2a27;
+  --accent-foreground: #b8c8ed;
 
-  --destructive:          #E86C67;
+  --destructive: #e86c67;
 
-  --border:               rgba(255, 255, 255, 0.08);
-  --input:                rgba(255, 255, 255, 0.1);
-  --ring:                 #7B97D6;
+  --border: rgba(255, 255, 255, 0.08);
+  --input: rgba(255, 255, 255, 0.1);
+  --ring: #7b97d6;
 
-  --chart-1: #7B97D6;
-  --chart-2: #5C75B0;
-  --chart-3: #3E5490;
-  --chart-4: #A3B8E0;
+  --chart-1: #7b97d6;
+  --chart-2: #5c75b0;
+  --chart-3: #3e5490;
+  --chart-4: #a3b8e0;
   --chart-5: #243660;
 
-  --sidebar:                    #1F1D1A;
-  --sidebar-foreground:         #E8E3DA;
-  --sidebar-primary:            #7B97D6;
+  --sidebar: #1f1d1a;
+  --sidebar-foreground: #e8e3da;
+  --sidebar-primary: #7b97d6;
   --sidebar-primary-foreground: #ffffff;
-  --sidebar-accent:             #2C2A27;
-  --sidebar-accent-foreground:  #B8C8ED;
-  --sidebar-border:             rgba(255, 255, 255, 0.08);
-  --sidebar-ring:               #7B97D6;
+  --sidebar-accent: #2c2a27;
+  --sidebar-accent-foreground: #b8c8ed;
+  --sidebar-border: rgba(255, 255, 255, 0.08);
+  --sidebar-ring: #7b97d6;
 }
 
 /* Dark-mode variant for Tailwind utilities */
 @custom-variant dark (&:where(.dark, .dark *));
 
-/* Base layer — resets & global styles */ 
+/* Base layer — resets & global styles */
 @layer base {
-  *, *::before, *::after {
+  *,
+  *::before,
+  *::after {
     @apply border-border outline-ring/50 box-border;
   }
 
@@ -198,12 +211,16 @@
   }
 
   /* ── Heading hierarchy ── */
-  h1, h2, h3 {
+  h1,
+  h2,
+  h3 {
     font-family: var(--font-heading);
     @apply tracking-tight font-bold;
   }
 
-  h4, h5, h6 {
+  h4,
+  h5,
+  h6 {
     @apply tracking-tight font-semibold;
   }
 

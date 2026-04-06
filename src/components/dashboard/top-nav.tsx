@@ -1,8 +1,12 @@
 "use client";
 
+import {
+  IconBell as Bell,
+  IconSearch as Search,
+  IconSettings as Settings,
+} from "@tabler/icons-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { IconSearch as Search, IconBell as Bell, IconSettings as Settings } from "@tabler/icons-react";
 import { Input } from "@/components/ui/input";
 
 export function TopNav() {
@@ -19,24 +23,25 @@ export function TopNav() {
       <nav className="flex items-center gap-8">
         {links.map((link) => {
           // A bit of hacky matching for home vs subpages exactly matching the image
-          const isActive = (link.name === "Journal" && pathname === "/dashboard") || pathname === link.href;
-          
+          const isActive =
+            (link.name === "Journal" && pathname === "/dashboard") || pathname === link.href;
+
           return (
-            <Link 
-              key={link.name} 
+            <Link
+              key={link.name}
               href={link.href}
               className={`text-sm font-sans font-medium hover:text-foreground transition-colors ${isActive ? "text-secondary border-b-2 border-secondary pb-1" : "text-muted-foreground pb-1 border-b-2 border-transparent"}`}
             >
               {link.name}
             </Link>
-          )
+          );
         })}
       </nav>
 
       <div className="flex items-center gap-6">
         <div className="relative">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" />
-          <Input 
+          <Input
             type="text"
             placeholder="Search archive..."
             className="w-64 pl-10 bg-muted/30 border-transparent focus-visible:border-secondary focus-visible:ring-1 focus-visible:ring-secondary rounded-full h-10 font-sans shadow-none"
@@ -45,7 +50,10 @@ export function TopNav() {
         <button className="text-muted-foreground hover:text-foreground transition-colors cursor-pointer">
           <Bell className="size-5" />
         </button>
-        <Link href="/dashboard/profile" className="text-muted-foreground hover:text-foreground transition-colors cursor-pointer">
+        <Link
+          href="/dashboard/profile"
+          className="text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
+        >
           <Settings className="size-5" />
         </Link>
       </div>

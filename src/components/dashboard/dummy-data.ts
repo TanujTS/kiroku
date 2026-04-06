@@ -2,7 +2,8 @@ export const DUMMY_POSTS = [
   {
     id: 1,
     title: "The Weight of Unspoken Words in a Digital Age",
-    snippet: "The silence of the digital void is often louder than any spoken conversation. In this entry, I explore the nuances of what we leave unsaid.",
+    snippet:
+      "The silence of the digital void is often louder than any spoken conversation. In this entry, I explore the nuances of what we leave unsaid.",
     date: "OCT 24, 2023",
     readTime: "8 MIN READ",
     status: "PUBLIC",
@@ -24,7 +25,8 @@ export const DUMMY_POSTS = [
   {
     id: 3,
     title: "Design System Documentation v2",
-    snippet: "Core principles for the Editorial Sanctuary design system including the latest token shifts.",
+    snippet:
+      "Core principles for the Editorial Sanctuary design system including the latest token shifts.",
     date: "Oct 18, 2023",
     readTime: "",
     status: "LINK-ONLY",
@@ -35,7 +37,8 @@ export const DUMMY_POSTS = [
   {
     id: 4,
     title: "The Future of Ink",
-    snippet: "Exploring haptic feedback in digital calligraphy tools and the loss of physical artifacts.",
+    snippet:
+      "Exploring haptic feedback in digital calligraphy tools and the loss of physical artifacts.",
     date: "Oct 15, 2023",
     readTime: "",
     status: "DRAFT",
@@ -58,14 +61,14 @@ export const DUMMY_POSTS = [
   {
     id: 6,
     title: "Letter to My Future Self",
-    snippet: "\"Do not let the convenience of the present erode the intentionality of your work.\"",
+    snippet: '"Do not let the convenience of the present erode the intentionality of your work."',
     date: "",
     readTime: "",
     status: "PRIVATE",
     category: "",
     featured: "highlight", // Indicates dark blue specific styling
     coverColor: "bg-primary",
-  }
+  },
 ];
 
 export const USER_PROFILE = {
@@ -73,5 +76,5 @@ export const USER_PROFILE = {
   role: "Editor-In-Chief",
   initials: "ET",
   avatarUrl: "",
-  email: "elias@kiroku.app"
+  email: "elias@kiroku.app",
 };

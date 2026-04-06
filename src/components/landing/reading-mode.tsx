@@ -1,21 +1,26 @@
 "use client";
 
+import {
+  IconBooks as Library,
+  IconMoon as Moon,
+  IconSun as Sun,
+  IconTypography as Type,
+} from "@tabler/icons-react";
 import { motion } from "framer-motion";
-import { IconMoon as Moon, IconSun as Sun, IconTypography as Type, IconBooks as Library } from "@tabler/icons-react";
 import { Card } from "@/components/ui/card";
 
 const MotionCard = motion.create(Card);
 
 const fadeUpVariants = {
   hidden: { opacity: 0, y: 30 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.8 } }
+  visible: { opacity: 1, y: 0, transition: { duration: 0.8 } },
 };
 
 export default function ReadingMode() {
   return (
     <section className="min-h-dvh py-24 px-6 md:px-12 max-w-7xl mx-auto flex flex-col justify-center">
       <div className="text-center max-w-3xl mx-auto mb-16 md:mb-20">
-        <motion.h2 
+        <motion.h2
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-50px" }}
@@ -24,39 +29,50 @@ export default function ReadingMode() {
         >
           Distraction-Free Reading
         </motion.h2>
-        <motion.p 
+        <motion.p
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-50px" }}
           variants={{
             hidden: { opacity: 0, y: 20 },
-            visible: { opacity: 1, y: 0, transition: { duration: 0.8, delay: 0.1 } }
+            visible: {
+              opacity: 1,
+              y: 0,
+              transition: { duration: 0.8, delay: 0.1 },
+            },
           }}
           className="text-muted-foreground font-sans text-lg md:text-xl"
         >
-          Focus on what matters most. No ads, no sidebars, no interruptions. Just the rhythm of your words.
+          Focus on what matters most. No ads, no sidebars, no interruptions. Just the rhythm of your
+          words.
         </motion.p>
       </div>
 
-      <motion.div 
+      <motion.div
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, margin: "-100px" }}
         variants={{
           visible: {
             transition: {
-              staggerChildren: 0.15
-            }
-          }
+              staggerChildren: 0.15,
+            },
+          },
         }}
         className="grid grid-cols-1 md:grid-cols-3 gap-6"
       >
         {/* Zen Canvas - Col Span 2 */}
-        <MotionCard variants={fadeUpVariants} className="md:col-span-2 bg-card border-border/60 shadow-sm rounded-3xl p-8 lg:p-10 relative overflow-hidden flex flex-col md:flex-row justify-between group min-h-[320px]">
+        <MotionCard
+          variants={fadeUpVariants}
+          className="md:col-span-2 bg-card border-border/60 shadow-sm rounded-3xl p-8 lg:p-10 relative overflow-hidden flex flex-col md:flex-row justify-between group min-h-[320px]"
+        >
           <div className="md:w-1/2 relative z-10 flex flex-col justify-center">
-            <h3 className="font-heading font-medium tracking-tight text-secondary text-3xl mb-4">Zen Canvas</h3>
+            <h3 className="font-heading font-medium tracking-tight text-secondary text-3xl mb-4">
+              Zen Canvas
+            </h3>
             <p className="font-sans text-muted-foreground text-sm md:text-base leading-relaxed">
-              A clean slate for your mind. The UI fades away as you type, leaving only you and your thoughts in a pure typographic space.
+              A clean slate for your mind. The UI fades away as you type, leaving only you and your
+              thoughts in a pure typographic space.
             </p>
           </div>
           {/* Faux Window Graphic */}
@@ -79,46 +95,63 @@ export default function ReadingMode() {
         </MotionCard>
 
         {/* Adaptive Tones - Col Span 1 */}
-        <MotionCard variants={fadeUpVariants} className="group md:col-span-1 bg-primary text-primary-foreground border-transparent hover:bg-card hover:border-border/60 hover:shadow-sm transition-all duration-700 shadow-lg shadow-primary/20 rounded-3xl p-8 lg:p-10 flex flex-col justify-end min-h-[320px]">
+        <MotionCard
+          variants={fadeUpVariants}
+          className="group md:col-span-1 bg-primary text-primary-foreground border-transparent hover:bg-card hover:border-border/60 hover:shadow-sm transition-all duration-700 shadow-lg shadow-primary/20 rounded-3xl p-8 lg:p-10 flex flex-col justify-end min-h-[320px]"
+        >
           <div className="mb-auto mt-2 relative size-10">
             <Moon className="absolute inset-0 size-10 text-primary-foreground/90 transition-all duration-700 rotate-0 scale-100 opacity-100 group-hover:-rotate-90 group-hover:scale-50 group-hover:opacity-0" />
             <Sun className="absolute inset-0 size-10 text-amber-500 transition-all duration-700 rotate-90 scale-50 opacity-0 group-hover:rotate-0 group-hover:scale-100 group-hover:opacity-100" />
           </div>
           <div className="relative z-10">
-            <h3 className="font-heading font-medium tracking-tight text-primary-foreground group-hover:text-foreground transition-colors duration-700 text-2xl mb-3 mt-4">Adaptive Tones</h3>
+            <h3 className="font-heading font-medium tracking-tight text-primary-foreground group-hover:text-foreground transition-colors duration-700 text-2xl mb-3 mt-4">
+              Adaptive Tones
+            </h3>
             <p className="font-sans text-primary-foreground/80 group-hover:text-muted-foreground transition-colors duration-700 text-sm leading-relaxed">
-              Automatic shifts between light and dark modes based on your environment and circadian rhythm.
+              Automatic shifts between light and dark modes based on your environment and circadian
+              rhythm.
             </p>
           </div>
         </MotionCard>
 
         {/* Editorial Serif - Col Span 1 */}
-        <MotionCard variants={fadeUpVariants} className="group md:col-span-1 bg-card border-border/60 shadow-sm rounded-3xl p-8 lg:p-10 flex flex-col items-center justify-center text-center min-h-[320px]">
+        <MotionCard
+          variants={fadeUpVariants}
+          className="group md:col-span-1 bg-card border-border/60 shadow-sm rounded-3xl p-8 lg:p-10 flex flex-col items-center justify-center text-center min-h-[320px]"
+        >
           <div className="size-20 rounded-full bg-secondary/10 group-hover:bg-secondary/20 transition-all duration-500 flex items-center justify-center text-secondary mb-8 shadow-sm border border-secondary/10 group-hover:scale-110 ease-out">
             <Type className="size-8 group-hover:scale-110 transition-transform duration-500" />
           </div>
-          <h3 className="font-heading font-medium tracking-tight text-foreground text-2xl mb-3">Editorial Serif</h3>
+          <h3 className="font-heading font-medium tracking-tight text-foreground text-2xl mb-3">
+            Editorial Serif
+          </h3>
           <p className="font-sans text-muted-foreground text-sm leading-relaxed">
             Premium typography designed for long-form comfort.
           </p>
         </MotionCard>
 
         {/* Curated Collections - Col Span 2 */}
-        <MotionCard variants={fadeUpVariants} className="md:col-span-2 bg-card border-border/60 shadow-sm rounded-3xl p-8 lg:p-10 relative overflow-hidden flex flex-col-reverse md:flex-row items-center justify-between gap-12 group min-h-[320px]">
+        <MotionCard
+          variants={fadeUpVariants}
+          className="md:col-span-2 bg-card border-border/60 shadow-sm rounded-3xl p-8 lg:p-10 relative overflow-hidden flex flex-col-reverse md:flex-row items-center justify-between gap-12 group min-h-[320px]"
+        >
           <div className="md:w-1/2 relative z-10 flex flex-col justify-center">
-            <h3 className="font-heading font-medium tracking-tight text-foreground text-3xl mb-4">Curated Collections</h3>
+            <h3 className="font-heading font-medium tracking-tight text-foreground text-3xl mb-4">
+              Curated Collections
+            </h3>
             <p className="font-sans text-muted-foreground text-sm md:text-base leading-relaxed">
-              Group your entries into distinct chronicles—like "Night Thoughts" or "Dev Log". Keep your mind and workspace uncluttered, easily returning to specific veins of thought.
+              Group your entries into distinct chronicles—like "Night Thoughts" or "Dev Log". Keep
+              your mind and workspace uncluttered, easily returning to specific veins of thought.
             </p>
           </div>
           <div className="md:w-1/2 flex items-center justify-center w-full min-h-[160px]">
-             <div className="relative size-36 md:size-40 flex items-center justify-center">
-                 <div className="absolute inset-0 bg-secondary/10 rounded-2xl rotate-[-8deg] transition-transform duration-500 group-hover:rotate-[-14deg] shadow-sm border border-secondary/10"></div>
-                 <div className="absolute inset-0 bg-secondary/20 rounded-2xl rotate-[4deg] transition-transform duration-500 group-hover:rotate-[8deg] shadow-sm border border-secondary/10"></div>
-                 <div className="absolute inset-0 bg-background rounded-2xl flex items-center justify-center transition-transform duration-500 group-hover:-translate-y-2 shadow-md border border-border/60 z-10">
-                     <Library className="size-12 text-secondary" />
-                 </div>
-             </div>
+            <div className="relative size-36 md:size-40 flex items-center justify-center">
+              <div className="absolute inset-0 bg-secondary/10 rounded-2xl rotate-[-8deg] transition-transform duration-500 group-hover:rotate-[-14deg] shadow-sm border border-secondary/10"></div>
+              <div className="absolute inset-0 bg-secondary/20 rounded-2xl rotate-[4deg] transition-transform duration-500 group-hover:rotate-[8deg] shadow-sm border border-secondary/10"></div>
+              <div className="absolute inset-0 bg-background rounded-2xl flex items-center justify-center transition-transform duration-500 group-hover:-translate-y-2 shadow-md border border-border/60 z-10">
+                <Library className="size-12 text-secondary" />
+              </div>
+            </div>
           </div>
         </MotionCard>
       </motion.div>
