@@ -10,7 +10,8 @@
     "format": "biome format --write",
     "check": "biome check --write",
     "precommit": "lint-staged",
-    "prepare": "husky"
+    "prepare": "husky",
+    "vercel-build": "prisma generate && prisma migrate deploy && next build"
   },
   "lint-staged": {
     "*.{ts,tsx,js,jsx,json,css}": "bun run check"
