@@ -7,6 +7,8 @@ import {
 } from "@tabler/icons-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { USER_PROFILE } from "@/components/dashboard/dummy-data";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Input } from "@/components/ui/input";
 
 export function TopNav() {
@@ -56,6 +58,12 @@ export function TopNav() {
         >
           <Settings className="size-5" />
         </Link>
+        <Avatar className="size-8 cursor-pointer ring-1 ring-border/20 transition-opacity hover:opacity-80">
+          <AvatarImage src={USER_PROFILE.avatarUrl} alt={USER_PROFILE.name} />
+          <AvatarFallback className="bg-primary/10 text-primary font-heading font-bold text-xs">
+            {USER_PROFILE.initials}
+          </AvatarFallback>
+        </Avatar>
       </div>
     </header>
   );

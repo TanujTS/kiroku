@@ -1,7 +1,6 @@
 "use client";
 
 import { motion, type Variants } from "framer-motion";
-import Link from "next/link";
 import BlurText from "@/components/BlurText";
 import StarBorder from "@/components/StarBorder";
 import { Button } from "@/components/ui/button";
@@ -24,26 +23,7 @@ const itemVariants: Variants = {
 
 export default function Hero() {
   return (
-    <div className="min-h-dvh bg-background text-foreground flex flex-col overflow-hidden">
-      {/* Navigation */}
-      <motion.header
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-        className="flex items-center justify-between px-6 py-6 md:px-12 md:py-8"
-      >
-        <div className="flex items-center">
-          <Link
-            href="/"
-            className="text-secondary font-heading font-bold tracking-tight text-2xl hover:text-secondary/90 transition-colors"
-          >
-            Kiroku
-          </Link>
-        </div>
-
-        {/* todo: add conditional rendering here when auth, if auth -> show navbar, else show login/signup */}
-      </motion.header>
-
+    <div className="min-h-[calc(100dvh-80px)] bg-background text-foreground flex flex-col overflow-hidden">
       {/* Hero Content */}
       <motion.main
         variants={containerVariants}
