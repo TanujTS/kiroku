@@ -1,0 +1,79 @@
+"use client";
+
+import {
+  IconArrowRight,
+  IconBlockquote,
+  IconBold,
+  IconItalic,
+  IconLink,
+  IconList,
+} from "@tabler/icons-react";
+import { motion } from "framer-motion";
+import { Button } from "@/components/ui/button";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+
+const tools = [
+  { icon: IconBold, label: "Bold", shortcut: "⌘B" },
+  { icon: IconItalic, label: "Italic", shortcut: "⌘I" },
+  { icon: IconLink, label: "Link", shortcut: "⌘K" },
+  { icon: IconList, label: "List", shortcut: "⌘L" },
+  { icon: IconBlockquote, label: "Quote", shortcut: "⌘Q" },
+];
+
+export function EditorToolbar() {
+  return (
+    <motion.div
+      className="fixed bottom-8 left-1/2 -translate-x-1/2 z-40"
+      initial={{ opacity: 0, y: 40 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{
+        duration: 0.6,
+        delay: 0.5,
+        ease: [0.22, 1, 0.36, 1],
+      }}
+    >
+      <div className="flex items-center gap-1 rounded-full bg-card ring-1 ring-border/10 p-1.5 shadow-xl shadow-foreground/5 backdrop-blur-md">
+        <TooltipProvider delayDuration={200}>
+          {/* Formatting Tools */}
+          <div className="flex items-center gap-1 px-2">
+            {tools.map((tool) => (
+              <Tooltip key={tool.label}>
+                <TooltipTrigger asChild>
+                  <motion.button
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    className="flex items-center justify-center size-9 rounded-full text-secondary hover:text-foreground hover:bg-muted transition-colors cursor-pointer"
+                  >
+                    <tool.icon className="size-4" strokeWidth={2} />
+                  </motion.button>
+                </TooltipTrigger>
+                <TooltipContent side="top" className="rounded-lg font-sans text-xs mb-2">
+                  {tool.label}
+                  <span className="text-muted-foreground ml-1">{tool.shortcut}</span>
+                </TooltipContent>
+              </Tooltip>
+            ))}
+          </div>
+
+          {/* Divider */}
+          <div className="w-px h-5 bg-border/50 mx-1" />
+
+          {/* Publish Button */}
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button className="rounded-full gap-3 font-sans font-semibold shadow-none bg-secondary hover:bg-secondary/90 text-secondary-foreground pl-5 pr-1.5 h-10 ml-1">
+                Publish
+                <div className="flex items-center justify-center size-7 rounded-full bg-background/20">
+                  <IconArrowRight className="size-4" />
+                </div>
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent side="top" className="rounded-lg font-sans text-xs mb-2">
+              Publish your entry
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+      </div>
+    </motion.div>
+  );
+}
