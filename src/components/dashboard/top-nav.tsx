@@ -7,12 +7,14 @@ import {
 } from "@tabler/icons-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { USER_PROFILE } from "@/components/dashboard/dummy-data";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Input } from "@/components/ui/input";
+import { authClient } from "@/lib/auth-client";
 
 export function TopNav() {
   const pathname = usePathname();
+  const { data: session } = authClient.useSession();
+  const user = session?.user;
 
   const links = [
     { name: "Home", href: "/dashboard" },
@@ -57,9 +59,9 @@ export function TopNav() {
           <Settings className="size-5" />
         </Link>
         <Avatar className="size-8 cursor-pointer ring-1 ring-border/20 transition-opacity hover:opacity-80">
-          <AvatarImage src={USER_PROFILE.avatarUrl} alt={USER_PROFILE.name} />
+          <AvatarImage src={user?.image || ""} alt={user?.name || "User"} />
           <AvatarFallback className="bg-primary/10 text-primary font-heading font-bold text-xs">
-            {USER_PROFILE.initials}
+            {user?.name?.substring(0, 2).toUpperCase() || "U"}
           </AvatarFallback>
         </Avatar>
       </div>

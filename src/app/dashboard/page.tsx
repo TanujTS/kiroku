@@ -1,7 +1,35 @@
+import { headers } from "next/headers";
 import { BentoGrid } from "@/components/dashboard/bento-grid";
 import { TopNav } from "@/components/dashboard/top-nav";
+import { auth, prisma } from "@/lib/auth";
 
-export default function DashboardPage() {
+export default async function DashboardPage() {
+  const session = await auth.api.getSession({ headers: await headers() });
+
+  const fetchedPosts = await prisma.post.findMany({
+    where: { authorId: session?.user.id, isDraft: false },
+    orderBy: { createdAt: "desc" },
+    include: {
+      tags: { include: { tag: true } },
+    },
+    take: 6,
+  });
+
+  const posts = fetchedPosts.map((p) => ({
+    id: p.id,
+    title: p.title,
+    snippet: p.content.substring(0, 150) + "...",
+    date: p.createdAt
+      .toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })
+      .toUpperCase(),
+    readTime: Math.ceil(p.content.split(/\s+/).length / 200) + " MIN READ",
+    status:
+      p.visibility === "PRIVATE" ? "PRIVATE" : p.visibility === "PUBLIC" ? "PUBLIC" : "LINK-ONLY",
+    category: p.tags[0]?.tag.name || "THOUGHT",
+    tags: p.tags.map((t) => t.tag.name),
+    featured: false,
+    coverColor: "bg-muted",
+  }));
   return (
     <div className="min-h-full flex flex-col">
       <TopNav />
@@ -38,7 +66,7 @@ export default function DashboardPage() {
         </div>
 
         {/* Dashboard Post Grid */}
-        <BentoGrid />
+        <BentoGrid posts={posts} />
 
         {/* Minimal Footer Inside Dashboard */}
         <div className="mt-24 pt-10 border-t border-border/10 flex flex-col items-center justify-center opacity-60">

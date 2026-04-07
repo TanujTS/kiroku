@@ -11,9 +11,14 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import { USER_PROFILE } from "./dummy-data";
 
-export function Sidebar() {
+export function Sidebar({
+  user,
+  collections,
+}: {
+  user: { name: string; email: string; image?: string | null; role: string };
+  collections: { id: string; title: string }[];
+}) {
   const pathname = usePathname();
 
   const navItems = [
@@ -22,8 +27,6 @@ export function Sidebar() {
     { name: "Drafts", href: "/dashboard/drafts", icon: Feather },
     { name: "Archive", href: "/dashboard/archive", icon: Archive },
   ];
-
-  const collections = ["Night Thoughts", "Dev Log"];
 
   return (
     <aside className="w-64 flex-shrink-0 flex flex-col justify-between h-screen sticky top-0 border-r border-border/10 py-8 px-6 overflow-y-auto">
@@ -62,13 +65,13 @@ export function Sidebar() {
           <ul className="flex flex-col gap-3 px-4">
             {collections.map((c, i) => (
               <li
-                key={c}
+                key={c.id}
                 className="flex items-center gap-3 text-sm font-sans font-medium text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
               >
                 <div
                   className={`size-1.5 rounded-full ${i === 0 ? "bg-primary" : "bg-amber-600/70"}`}
                 />
-                {c}
+                {c.title}
               </li>
             ))}
           </ul>
@@ -87,18 +90,16 @@ export function Sidebar() {
         <Link href="/dashboard/profile">
           <div className="flex items-center gap-3 p-3 rounded-2xl hover:bg-muted/40 transition-colors cursor-pointer ring-1 ring-border/20 bg-card">
             <Avatar className="size-10">
-              <AvatarImage src={USER_PROFILE.avatarUrl} alt={USER_PROFILE.name} />
+              <AvatarImage src={user.image || ""} alt={user.name} />
               <AvatarFallback className="bg-primary/20 text-primary font-heading font-medium">
-                {USER_PROFILE.initials}
+                {user.name.substring(0, 2).toUpperCase()}
               </AvatarFallback>
             </Avatar>
             <div className="flex flex-col overflow-hidden">
               <span className="text-sm font-sans font-semibold text-foreground truncate">
-                {USER_PROFILE.name}
+                {user.name}
               </span>
-              <span className="text-xs font-sans text-muted-foreground truncate">
-                {USER_PROFILE.role}
-              </span>
+              <span className="text-xs font-sans text-muted-foreground truncate">{user.role}</span>
             </div>
           </div>
         </Link>

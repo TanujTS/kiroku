@@ -1,13 +1,21 @@
 /** biome-ignore-all lint/a11y/noLabelWithoutControl: WIP */
 
-import { USER_PROFILE } from "@/components/dashboard/dummy-data";
 import { TopNav } from "@/components/dashboard/top-nav";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
+import { verifySession } from "@/lib/verify-session";
 
-export default function ProfilePage() {
+export default async function ProfilePage() {
+  const session = await verifySession();
+  const user = session.user as {
+    name: string;
+    email: string;
+    image?: string | null;
+    role?: string;
+  };
+
   return (
     <div className="min-h-full flex flex-col">
       <TopNav />
@@ -24,9 +32,9 @@ export default function ProfilePage() {
           {/* Avatar Section */}
           <div className="flex flex-col items-center gap-6">
             <Avatar className="size-32 ring-1 ring-border shadow-sm">
-              <AvatarImage src={USER_PROFILE.avatarUrl} alt={USER_PROFILE.name} />
+              <AvatarImage src={user.image || ""} alt={user.name} />
               <AvatarFallback className="bg-primary/10 text-primary font-heading font-bold text-4xl">
-                {USER_PROFILE.initials}
+                {user.name?.substring(0, 2).toUpperCase() || "U"}
               </AvatarFallback>
             </Avatar>
             <Button
@@ -50,7 +58,7 @@ export default function ProfilePage() {
                     Pen Name
                   </label>
                   <Input
-                    defaultValue={USER_PROFILE.name}
+                    defaultValue={user.name}
                     className="h-12 bg-transparent border-border/60 focus-visible:border-secondary shadow-none rounded-xl"
                   />
                 </div>
@@ -59,7 +67,7 @@ export default function ProfilePage() {
                     Role Tagline
                   </label>
                   <Input
-                    defaultValue={USER_PROFILE.role}
+                    defaultValue={user.role || "Author"}
                     className="h-12 bg-transparent border-border/60 focus-visible:border-secondary shadow-none rounded-xl"
                   />
                 </div>
@@ -68,7 +76,7 @@ export default function ProfilePage() {
                     Recovery Email
                   </label>
                   <Input
-                    defaultValue={USER_PROFILE.email}
+                    defaultValue={user.email}
                     type="email"
                     className="h-12 bg-transparent border-border/60 focus-visible:border-secondary shadow-none rounded-xl"
                   />

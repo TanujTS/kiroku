@@ -7,6 +7,7 @@ import {
   IconItalic,
   IconLink,
   IconList,
+  IconLoader2,
   IconMaximize,
   IconMinimize,
 } from "@tabler/icons-react";
@@ -25,9 +26,13 @@ const tools = [
 export function EditorToolbar({
   focusMode,
   onFocusModeChange,
+  onPublish,
+  isPublishing,
 }: {
   focusMode?: boolean;
   onFocusModeChange?: (val: boolean) => void;
+  onPublish?: () => void;
+  isPublishing?: boolean;
 }) {
   return (
     <motion.div
@@ -93,10 +98,18 @@ export function EditorToolbar({
           {/* Publish Button */}
           <Tooltip>
             <TooltipTrigger asChild>
-              <Button className="rounded-full gap-3 font-sans font-semibold shadow-none bg-secondary hover:bg-secondary/90 text-secondary-foreground pl-5 pr-1.5 h-10 ml-1">
-                Publish
+              <Button
+                onClick={onPublish}
+                disabled={isPublishing}
+                className="rounded-full gap-3 font-sans font-semibold shadow-none bg-secondary hover:bg-secondary/90 text-secondary-foreground pl-5 pr-1.5 h-10 ml-1"
+              >
+                {isPublishing ? "Publishing..." : "Publish"}
                 <div className="flex items-center justify-center size-7 rounded-full bg-background/20">
-                  <IconArrowRight className="size-4" />
+                  {isPublishing ? (
+                    <IconLoader2 className="size-4 animate-spin" />
+                  ) : (
+                    <IconArrowRight className="size-4" />
+                  )}
                 </div>
               </Button>
             </TooltipTrigger>

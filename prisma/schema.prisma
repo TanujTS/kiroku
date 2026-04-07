@@ -105,6 +105,7 @@ model Post {
 
   // many-to-many via join table
   collections PostCollection[]
+  tags        PostTag[]
 
   @@index([authorId])
   @@map("post")
@@ -121,6 +122,7 @@ model Collection {
 
   // many-to-many via join table
   posts PostCollection[]
+  tags  CollectionTag[]
 
   @@index([authorId])
   @@map("collection")
@@ -137,4 +139,36 @@ model PostCollection {
 
   @@id([postId, collectionId]) // composite PK, prevents duplicate entries
   @@map("post_collection")
+}
+
+model Tag {
+  id        String   @id @default(uuid())
+  name      String   @unique
+  slug      String   @unique
+  createdAt DateTime @default(now())
+
+  postTags       PostTag[]
+  collectionTags CollectionTag[]
+
+  @@map("tag")
+}
+
+model PostTag {
+  postId String
+  post   Post   @relation(fields: [postId], references: [id], onDelete: Cascade)
+  tagId  String
+  tag    Tag    @relation(fields: [tagId], references: [id], onDelete: Cascade)
+
+  @@id([postId, tagId])
+  @@map("post_tag")
+}
+
+model CollectionTag {
+  collectionId String
+  collection   Collection @relation(fields: [collectionId], references: [id], onDelete: Cascade)
+  tagId        String
+  tag          Tag        @relation(fields: [tagId], references: [id], onDelete: Cascade)
+
+  @@id([collectionId, tagId])
+  @@map("collection_tag")
 }

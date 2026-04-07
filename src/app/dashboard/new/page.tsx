@@ -1,7 +1,10 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { toast } from "sonner";
+import { createPostAction } from "@/actions/post";
 import { TopNav } from "@/components/dashboard/top-nav";
 import { EditorSidebar } from "@/components/editor/editor-sidebar";
 import { EditorToolbar } from "@/components/editor/editor-toolbar";
@@ -14,6 +17,8 @@ export default function NewPostPage() {
   const [tags, setTags] = useState(["Life", "Work"]);
   const [focusMode, setFocusMode] = useState(false);
   const [visibility, setVisibility] = useState<"private" | "unlisted" | "public">("private");
+  const [isPublishing, setIsPublishing] = useState(false);
+  const router = useRouter();
 
   const today = new Date()
     .toLocaleDateString("en-US", {
@@ -22,6 +27,43 @@ export default function NewPostPage() {
       day: "numeric",
     })
     .toUpperCase();
+
+  const handlePublish = async () => {
+    if (!title.trim() || !content.trim()) {
+      toast.error("Missing fields", {
+        description: "Please provide both a title and content.",
+      });
+      return;
+    }
+
+    setIsPublishing(true);
+
+    try {
+      const result = await createPostAction({
+        title,
+        content,
+        visibility,
+        tags,
+      });
+
+      if (result.success) {
+        toast.success("Entry published", {
+          description: "Your reflection has been safely stored.",
+        });
+        router.push("/dashboard");
+      } else {
+        toast.error("Failed to publish", {
+          description: result.error,
+        });
+      }
+    } catch (_err) {
+      toast.error("Network Error", {
+        description: "Make sure your database is running.",
+      });
+    } finally {
+      setIsPublishing(false);
+    }
+  };
 
   return (
     <div className="flex min-h-screen flex-col bg-background overflow-x-hidden">
@@ -123,7 +165,12 @@ export default function NewPostPage() {
       </div>
 
       {/* Floating Bottom Toolbar */}
-      <EditorToolbar focusMode={focusMode} onFocusModeChange={setFocusMode} />
+      <EditorToolbar
+        focusMode={focusMode}
+        onFocusModeChange={setFocusMode}
+        onPublish={handlePublish}
+        isPublishing={isPublishing}
+      />
     </div>
   );
 }

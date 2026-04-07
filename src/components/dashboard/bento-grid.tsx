@@ -11,7 +11,19 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { DUMMY_POSTS } from "./dummy-data";
+
+export type BentoPost = {
+  id: string;
+  title: string;
+  snippet: string;
+  date: string;
+  readTime: string;
+  status: string;
+  category: string;
+  tags: string[];
+  featured: boolean;
+  coverColor: string;
+};
 
 function getStatusIcon(status: string) {
   switch (status) {
@@ -28,10 +40,20 @@ function getStatusIcon(status: string) {
   }
 }
 
-export function BentoGrid() {
-  const featuredPost = DUMMY_POSTS[0];
-  const rightColumnPosts = DUMMY_POSTS.slice(1, 4);
-  const bottomPosts = DUMMY_POSTS.slice(4, 6);
+export function BentoGrid({ posts = [] }: { posts?: BentoPost[] }) {
+  const featuredPost = posts[0] || {
+    id: "placeholder",
+    title: "Start Writing",
+    snippet: "Create your first entry to populate your dashboard.",
+    date: "",
+    readTime: "",
+    status: "PRIVATE",
+    category: "",
+    featured: false,
+    coverColor: "bg-muted",
+  };
+  const rightColumnPosts = posts.length > 1 ? posts.slice(1, 4) : [];
+  const bottomPosts = posts.length > 4 ? posts.slice(4, 6) : [];
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 auto-rows-min">
@@ -111,66 +133,69 @@ export function BentoGrid() {
       </div>
 
       {/* Bottom Row */}
-      {/* 1. Medium Card */}
-      <Card className="rounded-3xl border-0 bg-card shadow-sm p-8 hover:shadow-md transition-shadow cursor-pointer">
-        <div className="flex items-center justify-between mb-6">
-          <Badge
-            variant="secondary"
-            className="bg-muted/50 font-sans font-medium text-xs gap-1.5 ring-1 ring-border/20 hover:bg-muted"
-          >
-            {getStatusIcon("PUBLIC")}
-            PUBLIC
-          </Badge>
-          <button className="text-muted-foreground hover:text-foreground transition-colors">
-            <MoreHorizontal className="size-4" />
-          </button>
-        </div>
-        <h4 className="text-2xl font-heading font-bold tracking-tight text-foreground mb-4">
-          {bottomPosts[0].title}
-        </h4>
-        <p className="text-sm font-sans text-muted-foreground leading-relaxed mb-6">
-          {bottomPosts[0].snippet}
-        </p>
-        <div className="flex gap-2">
-          {bottomPosts[0].tags?.map((tag) => (
-            <Badge
-              key={tag}
-              variant="outline"
-              className="text-xs font-sans text-muted-foreground border-border/40 bg-transparent"
-            >
-              {tag}
-            </Badge>
-          ))}
-        </div>
-      </Card>
-
-      {/* 2. Highlight Card (Dark Blue Letter) */}
-      <Card className="rounded-3xl border-0 bg-secondary shadow-sm p-8 flex flex-col justify-between hover:shadow-md transition-shadow cursor-pointer relative overflow-hidden group">
-        <div className="relative z-10 flex flex-col h-full justify-between">
-          <div>
+      {bottomPosts.length > 0 && (
+        <Card className="rounded-3xl border-0 bg-card shadow-sm p-8 hover:shadow-md transition-shadow cursor-pointer">
+          <div className="flex items-center justify-between mb-6">
             <Badge
               variant="secondary"
-              className="bg-white/10 text-white hover:bg-white/20 border-0 font-sans text-xs gap-1.5 mb-6 backdrop-blur-sm"
+              className="bg-muted/50 font-sans font-medium text-xs gap-1.5 ring-1 ring-border/20 hover:bg-muted"
             >
-              <Lock className="size-3" />
-              PRIVATE
+              {getStatusIcon(bottomPosts[0].status)}
+              {bottomPosts[0].status}
             </Badge>
-            <h4 className="text-2xl font-heading font-bold tracking-tight text-white mb-4 leading-tight">
-              {bottomPosts[1].title}
-            </h4>
-            <p className="text-sm font-sans text-white/80 leading-relaxed italic">
-              {bottomPosts[1].snippet}
-            </p>
+            <button className="text-muted-foreground hover:text-foreground transition-colors">
+              <MoreHorizontal className="size-4" />
+            </button>
           </div>
-          <div className="flex items-center gap-2 text-xs font-sans font-bold text-white uppercase tracking-widest mt-8 group-hover:gap-4 transition-all">
-            Continue Writing <MoveRight className="size-4" />
+          <h4 className="text-2xl font-heading font-bold tracking-tight text-foreground mb-4">
+            {bottomPosts[0].title}
+          </h4>
+          <p className="text-sm font-sans text-muted-foreground leading-relaxed mb-6">
+            {bottomPosts[0].snippet}
+          </p>
+          <div className="flex gap-2">
+            {bottomPosts[0].tags?.map((tag) => (
+              <Badge
+                key={tag}
+                variant="outline"
+                className="text-xs font-sans text-muted-foreground border-border/40 bg-transparent"
+              >
+                {tag}
+              </Badge>
+            ))}
           </div>
-        </div>
-        {/* Decorative Quote Mark */}
-        <div className="absolute -bottom-8 -right-4 text-9xl text-white/10 font-heading font-bold select-none">
-          "
-        </div>
-      </Card>
+        </Card>
+      )}
+
+      {/* 2. Highlight Card (Dark Blue Letter) */}
+      {bottomPosts.length > 1 && (
+        <Card className="rounded-3xl border-0 bg-secondary shadow-sm p-8 flex flex-col justify-between hover:shadow-md transition-shadow cursor-pointer relative overflow-hidden group">
+          <div className="relative z-10 flex flex-col h-full justify-between">
+            <div>
+              <Badge
+                variant="secondary"
+                className="bg-white/10 text-white hover:bg-white/20 border-0 font-sans text-xs gap-1.5 mb-6 backdrop-blur-sm"
+              >
+                <Lock className="size-3" />
+                {bottomPosts[1].status}
+              </Badge>
+              <h4 className="text-2xl font-heading font-bold tracking-tight text-white mb-4 leading-tight">
+                {bottomPosts[1].title}
+              </h4>
+              <p className="text-sm font-sans text-white/80 leading-relaxed italic">
+                {bottomPosts[1].snippet}
+              </p>
+            </div>
+            <div className="flex items-center gap-2 text-xs font-sans font-bold text-white uppercase tracking-widest mt-8 group-hover:gap-4 transition-all">
+              Continue Writing <MoveRight className="size-4" />
+            </div>
+          </div>
+          {/* Decorative Quote Mark */}
+          <div className="absolute -bottom-8 -right-4 text-9xl text-white/10 font-heading font-bold select-none">
+            "
+          </div>
+        </Card>
+      )}
 
       {/* 3. Action Card (Guided Writing) */}
       <Card className="rounded-3xl border border-dashed border-border/80 bg-transparent shadow-none p-8 flex flex-col items-center justify-center text-center hover:bg-muted/10 transition-colors">
