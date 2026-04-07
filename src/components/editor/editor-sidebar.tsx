@@ -1,8 +1,12 @@
 "use client";
 
-import { IconPlus, IconX } from "@tabler/icons-react";
+import { IconGlobe, IconLink, IconLock, IconPlus, IconX } from "@tabler/icons-react";
 import { motion } from "framer-motion";
+import { useState } from "react";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import {
   Select,
   SelectContent,
@@ -10,12 +14,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Switch } from "@/components/ui/switch";
 import { cn } from "@/lib/utils";
 
 interface EditorSidebarProps {
-  visibility: "private" | "public";
-  onVisibilityChange: (value: "private" | "public") => void;
+  visibility: "private" | "unlisted" | "public";
+  onVisibilityChange: (value: "private" | "unlisted" | "public") => void;
   collection: string;
   onCollectionChange: (value: string) => void;
   tags: string[];
@@ -35,16 +38,20 @@ export function EditorSidebar({
   tags,
   onTagsChange,
 }: EditorSidebarProps) {
+  const [tagInput, setTagInput] = useState("");
+  const [isTagPopoverOpen, setIsTagPopoverOpen] = useState(false);
+
   const removeTag = (tagToRemove: string) => {
     onTagsChange(tags.filter((t) => t !== tagToRemove));
   };
 
-  const addTag = () => {
-    // In a real app this would open a popover / input
-    const newTag = prompt("Enter a tag name:");
+  const handleAddTag = () => {
+    const newTag = tagInput.trim();
     if (newTag && !tags.includes(newTag)) {
       onTagsChange([...tags, newTag]);
     }
+    setTagInput("");
+    setIsTagPopoverOpen(false);
   };
 
   return (
@@ -67,31 +74,39 @@ export function EditorSidebar({
           </h3>
 
           <div className="flex flex-col gap-4">
-            {/* Private Toggle */}
-            <label className="flex items-center justify-between cursor-pointer group">
-              <div className="flex flex-col gap-0.5">
-                <span className="text-sm font-sans font-semibold text-foreground">Private</span>
-                <span className="text-xs font-sans text-muted-foreground">
-                  Only you can see this
-                </span>
-              </div>
-              <Switch
-                checked={visibility === "private"}
-                onCheckedChange={(checked) => onVisibilityChange(checked ? "private" : "public")}
-              />
-            </label>
-
-            {/* Public Toggle */}
-            <label className="flex items-center justify-between cursor-pointer group">
-              <div className="flex flex-col gap-0.5">
-                <span className="text-sm font-sans font-semibold text-foreground">Public</span>
-                <span className="text-xs font-sans text-muted-foreground">Visible to everyone</span>
-              </div>
-              <Switch
-                checked={visibility === "public"}
-                onCheckedChange={(checked) => onVisibilityChange(checked ? "public" : "private")}
-              />
-            </label>
+            <Select
+              value={visibility}
+              onValueChange={(val) => onVisibilityChange(val as "private" | "unlisted" | "public")}
+            >
+              <SelectTrigger className="w-full rounded-2xl bg-card border-none shadow-sm font-sans text-sm font-semibold h-11 text-foreground px-4">
+                <SelectValue placeholder="Journal Mode" />
+              </SelectTrigger>
+              <SelectContent className="rounded-xl border-none shadow-lg">
+                <SelectItem value="private" className="font-sans font-medium">
+                  <div className="flex items-center gap-2">
+                    <IconLock className="size-4 text-muted-foreground" />
+                    <span>Private</span>
+                  </div>
+                </SelectItem>
+                <SelectItem value="unlisted" className="font-sans font-medium">
+                  <div className="flex items-center gap-2">
+                    <IconLink className="size-4 text-muted-foreground" />
+                    <span>Unlisted</span>
+                  </div>
+                </SelectItem>
+                <SelectItem value="public" className="font-sans font-medium">
+                  <div className="flex items-center gap-2">
+                    <IconGlobe className="size-4 text-muted-foreground" />
+                    <span>Public</span>
+                  </div>
+                </SelectItem>
+              </SelectContent>
+            </Select>
+            <p className="text-xs text-center font-sans text-muted-foreground">
+              {visibility === "private" && "Only you can see this entry."}
+              {visibility === "unlisted" && "Anyone with the link can view."}
+              {visibility === "public" && "Visible on your public profile."}
+            </p>
           </div>
         </motion.div>
 
@@ -152,13 +167,42 @@ export function EditorSidebar({
                 </Badge>
               </motion.div>
             ))}
-            <button
-              onClick={addTag}
-              className="inline-flex items-center gap-1 rounded-full px-3 py-1 text-[10px] font-sans font-bold uppercase tracking-widest text-muted-foreground border border-dashed border-muted-foreground/40 hover:bg-muted-foreground/10 transition-colors cursor-pointer shadow-none"
-            >
-              <IconPlus className="size-3" />
-              Tag
-            </button>
+            <Popover open={isTagPopoverOpen} onOpenChange={setIsTagPopoverOpen}>
+              <PopoverTrigger asChild>
+                <button className="inline-flex items-center gap-1 rounded-full px-3 py-1 text-[10px] font-sans font-bold uppercase tracking-widest text-muted-foreground border border-dashed border-muted-foreground/40 hover:bg-muted-foreground/10 transition-colors cursor-pointer shadow-none">
+                  <IconPlus className="size-3" />
+                  Tag
+                </button>
+              </PopoverTrigger>
+              <PopoverContent
+                className="w-56 rounded-2xl p-3 border-none shadow-xl"
+                side="bottom"
+                align="start"
+              >
+                <div className="flex flex-col gap-2">
+                  <p className="text-xs font-sans font-semibold text-muted-foreground uppercase tracking-widest">
+                    New Tag
+                  </p>
+                  <Input
+                    autoFocus
+                    placeholder="e.g. Ideas"
+                    value={tagInput}
+                    onChange={(e) => setTagInput(e.target.value)}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter") handleAddTag();
+                    }}
+                    className="font-sans text-sm rounded-xl"
+                  />
+                  <Button
+                    size="sm"
+                    onClick={handleAddTag}
+                    className="rounded-xl font-sans font-semibold bg-secondary text-secondary-foreground hover:bg-secondary/90 w-full mt-1"
+                  >
+                    Add Tag
+                  </Button>
+                </div>
+              </PopoverContent>
+            </Popover>
           </div>
         </motion.div>
       </div>

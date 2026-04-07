@@ -1,17 +1,19 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
 import { TopNav } from "@/components/dashboard/top-nav";
 import { EditorSidebar } from "@/components/editor/editor-sidebar";
 import { EditorToolbar } from "@/components/editor/editor-toolbar";
+import { cn } from "@/lib/utils";
 
 export default function NewPostPage() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  const [visibility, setVisibility] = useState<"private" | "public">("private");
+  const [visibility, setVisibility] = useState<"private" | "unlisted" | "public">("private");
   const [collection, setCollection] = useState("daily-reflections");
   const [tags, setTags] = useState(["Life", "Work"]);
+  const [focusMode, setFocusMode] = useState(false);
 
   const today = new Date()
     .toLocaleDateString("en-US", {
@@ -22,11 +24,27 @@ export default function NewPostPage() {
     .toUpperCase();
 
   return (
-    <div className="flex min-h-screen flex-col bg-background">
-      <TopNav />
+    <div className="flex min-h-screen flex-col bg-background overflow-x-hidden">
+      <AnimatePresence>
+        {!focusMode && (
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.3 }}
+          >
+            <TopNav />
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Editor Canvas */}
-      <div className="flex flex-1 px-6 pt-10 pb-28 lg:px-10">
+      <div
+        className={cn(
+          "flex flex-1 px-6 pb-28 lg:px-10 transition-all duration-500",
+          focusMode ? "pt-24 justify-center" : "pt-10",
+        )}
+      >
         {/* Main Writing Area */}
         <motion.div
           className="flex-1 max-w-3xl mx-auto lg:mx-0 lg:mr-8"
@@ -82,18 +100,30 @@ export default function NewPostPage() {
         </motion.div>
 
         {/* Right Sidebar Panel */}
-        <EditorSidebar
-          visibility={visibility}
-          onVisibilityChange={setVisibility}
-          collection={collection}
-          onCollectionChange={setCollection}
-          tags={tags}
-          onTagsChange={setTags}
-        />
+        <AnimatePresence>
+          {!focusMode && (
+            <motion.div
+              layout
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: 50 }}
+              transition={{ duration: 0.4 }}
+            >
+              <EditorSidebar
+                visibility={visibility}
+                onVisibilityChange={setVisibility}
+                collection={collection}
+                onCollectionChange={setCollection}
+                tags={tags}
+                onTagsChange={setTags}
+              />
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
 
       {/* Floating Bottom Toolbar */}
-      <EditorToolbar />
+      <EditorToolbar focusMode={focusMode} onFocusModeChange={setFocusMode} />
     </div>
   );
 }

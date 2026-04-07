@@ -7,6 +7,8 @@ import {
   IconItalic,
   IconLink,
   IconList,
+  IconMaximize,
+  IconMinimize,
 } from "@tabler/icons-react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
@@ -20,7 +22,13 @@ const tools = [
   { icon: IconBlockquote, label: "Quote", shortcut: "⌘Q" },
 ];
 
-export function EditorToolbar() {
+export function EditorToolbar({
+  focusMode,
+  onFocusModeChange,
+}: {
+  focusMode?: boolean;
+  onFocusModeChange?: (val: boolean) => void;
+}) {
   return (
     <motion.div
       className="fixed bottom-8 left-1/2 -translate-x-1/2 z-40"
@@ -54,6 +62,30 @@ export function EditorToolbar() {
               </Tooltip>
             ))}
           </div>
+
+          {/* Divider */}
+          <div className="w-px h-5 bg-border/50 mx-1" />
+
+          {/* Focus Mode Toggle */}
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <motion.button
+                onClick={() => onFocusModeChange?.(!focusMode)}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="flex items-center justify-center size-9 rounded-full text-secondary hover:text-foreground hover:bg-muted transition-colors cursor-pointer"
+              >
+                {focusMode ? (
+                  <IconMinimize className="size-4" />
+                ) : (
+                  <IconMaximize className="size-4" />
+                )}
+              </motion.button>
+            </TooltipTrigger>
+            <TooltipContent side="top" className="rounded-lg font-sans text-xs mb-2">
+              {focusMode ? "Exit Focus Mode" : "Focus Mode"}
+            </TooltipContent>
+          </Tooltip>
 
           {/* Divider */}
           <div className="w-px h-5 bg-border/50 mx-1" />
