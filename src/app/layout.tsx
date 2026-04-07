@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Space_Grotesk, Unbounded } from "next/font/google";
+import { Lora, Space_Grotesk, Unbounded } from "next/font/google";
 import { Toaster } from "@/components/ui/sonner";
 import "./globals.css";
 import { ThemeProvider } from "next-themes";
@@ -18,6 +18,12 @@ const spaceGrotesk = Space_Grotesk({
   weight: ["400", "500", "600"],
 });
 
+const lora = Lora({
+  subsets: ["latin"],
+  variable: "--font-lora",
+  weight: ["400", "500", "600", "700"],
+});
+
 export const metadata: Metadata = {
   title: "Kiroku",
   description: "where your story finds its breath",
@@ -29,8 +35,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={`${unbounded.variable} ${spaceGrotesk.variable} antialiased`}>
+    <html lang="en" className={`${unbounded.variable} ${spaceGrotesk.variable} ${lora.variable}`}>
+      <body className={`antialiased`}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           {children}
           <Toaster />

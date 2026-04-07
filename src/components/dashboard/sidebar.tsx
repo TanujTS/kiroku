@@ -34,7 +34,7 @@ export function Sidebar() {
               Kiroku
             </span>
             <span className="text-[10px] uppercase font-sans tracking-widest text-muted-foreground mt-1">
-              Journal / Author View
+              Author View
             </span>
           </Link>
         </div>
@@ -80,7 +80,7 @@ export function Sidebar() {
           className="w-full rounded-full gap-2 font-semibold h-12 shadow-none bg-secondary hover:bg-secondary/90 text-secondary-foreground"
           size="lg"
         >
-          <Plus className="size-4" />
+          <Plus className="size-4 font-sans" />
           Write New
         </Button>
 

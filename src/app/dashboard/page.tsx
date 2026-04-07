@@ -12,7 +12,7 @@ export default function DashboardPage() {
           <div className="max-w-xl">
             {/* The PRD specifies display fonts to break the rhythm. We use font-heading here. */}
             <h1 className="text-6xl font-heading font-extrabold tracking-tighter text-foreground mb-6">
-              Journal <span className="text-primary">Archive</span>
+              Your <span className="text-primary">Archive</span>
             </h1>
             <p className="text-lg text-muted-foreground font-sans leading-relaxed">
               Welcome to your sanctuary. Here lies the collective weight of your thoughts, organized

@@ -13,6 +13,7 @@ export default function NewPostPage() {
   const [collection, setCollection] = useState("daily-reflections");
   const [tags, setTags] = useState(["Life", "Work"]);
   const [focusMode, setFocusMode] = useState(false);
+  const [visibility, setVisibility] = useState<"private" | "unlisted" | "public">("private");
 
   const today = new Date()
     .toLocaleDateString("en-US", {
@@ -109,6 +110,8 @@ export default function NewPostPage() {
               transition={{ duration: 0.4 }}
             >
               <EditorSidebar
+                visibility={visibility}
+                onVisibilityChange={setVisibility}
                 collection={collection}
                 onCollectionChange={setCollection}
                 tags={tags}

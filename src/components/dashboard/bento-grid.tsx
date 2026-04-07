@@ -172,12 +172,12 @@ export function BentoGrid() {
         </div>
       </Card>
 
-      {/* 3. Action Card (Prompted Journaling) */}
+      {/* 3. Action Card (Guided Writing) */}
       <Card className="rounded-3xl border border-dashed border-border/80 bg-transparent shadow-none p-8 flex flex-col items-center justify-center text-center hover:bg-muted/10 transition-colors">
         <div className="size-12 rounded-full bg-secondary/10 text-secondary flex items-center justify-center mb-6">
           <Sparkles className="size-5" />
         </div>
-        <h4 className="text-lg font-sans font-bold text-foreground mb-2">Prompted Journaling</h4>
+        <h4 className="text-lg font-sans font-bold text-foreground mb-2">Guided Writing</h4>
         <p className="text-sm font-sans text-muted-foreground leading-relaxed mb-8 max-w-[200px]">
           Not sure what to write? Let our AI-curated prompts spark a new reflection.
         </p>

@@ -56,6 +56,7 @@
   /* ── Typography ── */
   --font-heading: var(--font-unbounded);
   --font-sans: var(--font-space-grotesk);
+  --font-serif: var(--font-lora);
   --font-mono: ui-monospace, "Cascadia Code", "Source Code Pro", Menlo, monospace;
 
   /* ── Border radius scale ──

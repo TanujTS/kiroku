@@ -16,7 +16,6 @@ export function TopNav() {
 
   const links = [
     { name: "Home", href: "/dashboard" },
-    { name: "Journal", href: "/dashboard/journal" },
     { name: "New Post", href: "/dashboard/new" },
   ];
 
@@ -25,8 +24,7 @@ export function TopNav() {
       <nav className="flex items-center gap-8">
         {links.map((link) => {
           // A bit of hacky matching for home vs subpages exactly matching the image
-          const isActive =
-            (link.name === "Journal" && pathname === "/dashboard") || pathname === link.href;
+          const isActive = pathname === link.href;
 
           return (
             <Link

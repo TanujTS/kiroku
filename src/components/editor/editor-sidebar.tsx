@@ -1,6 +1,6 @@
 "use client";
 
-import { IconPlus, IconX } from "@tabler/icons-react";
+import { IconGlobe, IconLink, IconLock, IconPlus, IconX } from "@tabler/icons-react";
 import { motion } from "framer-motion";
 import { useState } from "react";
 import { Badge } from "@/components/ui/badge";
@@ -17,6 +17,8 @@ import {
 import { cn } from "@/lib/utils";
 
 interface EditorSidebarProps {
+  visibility: "private" | "unlisted" | "public";
+  onVisibilityChange: (value: "private" | "unlisted" | "public") => void;
   collection: string;
   onCollectionChange: (value: string) => void;
   tags: string[];
@@ -29,6 +31,8 @@ const TAG_COLORS: Record<string, string> = {
 };
 
 export function EditorSidebar({
+  visibility,
+  onVisibilityChange,
   collection,
   onCollectionChange,
   tags,
@@ -58,6 +62,53 @@ export function EditorSidebar({
       transition={{ duration: 0.6, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
     >
       <div className="sticky top-28 flex flex-col gap-8">
+        {/* ── Visibility ── */}
+        <motion.div
+          className="rounded-3xl bg-muted p-6"
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.4 }}
+        >
+          <h3 className="text-xs font-heading font-bold uppercase tracking-widest text-secondary mb-5">
+            Visibility
+          </h3>
+          <div className="flex flex-col gap-4">
+            <Select
+              value={visibility}
+              onValueChange={(val) => onVisibilityChange(val as "private" | "unlisted" | "public")}
+            >
+              <SelectTrigger className="w-full rounded-2xl bg-card border-none shadow-sm font-sans text-sm font-semibold h-11 text-foreground px-4">
+                <SelectValue placeholder="Visibility" />
+              </SelectTrigger>
+              <SelectContent className="rounded-xl border-none shadow-lg">
+                <SelectItem value="private" className="font-sans font-medium">
+                  <div className="flex items-center gap-2">
+                    <IconLock className="size-4 text-muted-foreground" />
+                    <span>Private</span>
+                  </div>
+                </SelectItem>
+                <SelectItem value="unlisted" className="font-sans font-medium">
+                  <div className="flex items-center gap-2">
+                    <IconLink className="size-4 text-muted-foreground" />
+                    <span>Unlisted</span>
+                  </div>
+                </SelectItem>
+                <SelectItem value="public" className="font-sans font-medium">
+                  <div className="flex items-center gap-2">
+                    <IconGlobe className="size-4 text-muted-foreground" />
+                    <span>Public</span>
+                  </div>
+                </SelectItem>
+              </SelectContent>
+            </Select>
+            <p className="text-xs text-center font-sans text-muted-foreground">
+              {visibility === "private" && "Only you can see this entry."}
+              {visibility === "unlisted" && "Anyone with the link can view."}
+              {visibility === "public" && "Visible on your public profile."}
+            </p>
+          </div>
+        </motion.div>
+
         {/* ── Collection ── */}
         <motion.div
           className="rounded-3xl bg-muted p-6"

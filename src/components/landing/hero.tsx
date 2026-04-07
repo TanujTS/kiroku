@@ -46,7 +46,7 @@ export default function Hero() {
 
         <div className="font-sans text-muted-foreground text-lg md:text-xl max-w-2xl mx-auto mb-10 md:mb-14 justify-center text-center">
           <BlurText
-            text="Experience an editorial approach to personal journaling. Where quietude meets modern craftsmanship."
+            text="Experience an editorial approach to personal writing. Where quietude meets modern craftsmanship."
             delay={50}
             animateBy="words"
             direction="top"
