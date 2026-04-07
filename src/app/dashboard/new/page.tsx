@@ -10,7 +10,6 @@ import { cn } from "@/lib/utils";
 export default function NewPostPage() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  const [visibility, setVisibility] = useState<"private" | "unlisted" | "public">("private");
   const [collection, setCollection] = useState("daily-reflections");
   const [tags, setTags] = useState(["Life", "Work"]);
   const [focusMode, setFocusMode] = useState(false);
@@ -110,8 +109,6 @@ export default function NewPostPage() {
               transition={{ duration: 0.4 }}
             >
               <EditorSidebar
-                visibility={visibility}
-                onVisibilityChange={setVisibility}
                 collection={collection}
                 onCollectionChange={setCollection}
                 tags={tags}

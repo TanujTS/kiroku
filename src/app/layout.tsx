@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Space_Grotesk, Unbounded } from "next/font/google";
 import { Toaster } from "@/components/ui/sonner";
 import "./globals.css";
+import { ThemeProvider } from "next-themes";
 
 const unbounded = Unbounded({
   subsets: ["latin"],
@@ -28,8 +29,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${unbounded.variable} ${spaceGrotesk.variable} antialiased`}>
-        {children}
-        <Toaster />
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          {children}
+          <Toaster />
+        </ThemeProvider>
       </body>
     </html>
   );
