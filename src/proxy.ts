@@ -1,6 +1,5 @@
 import { getSessionCookie } from "better-auth/cookies";
 import { NextRequest, NextResponse } from "next/server";
-import { toast } from "sonner";
 
 export async function proxy(request: NextRequest) {
   const session = getSessionCookie(request);
@@ -8,13 +7,15 @@ export async function proxy(request: NextRequest) {
 
   //note: can add more routes later
   if (!session && pathname.startsWith("/dashboard")) {
-    toast("Please login to access dashboard!");
-    return NextResponse.redirect("/login");
+    const url = new URL("/login", request.url);
+    url.searchParams.set("error", "unauthorized");
+    return NextResponse.redirect(url);
   }
 
   if (session && (pathname === "/login" || pathname === "/")) {
-    toast("Welcome back!");
-    return NextResponse.redirect(new URL("/dashboard", request.url));
+    const url = new URL("/dashboard", request.url);
+    url.searchParams.set("toast", "welcome_back");
+    return NextResponse.redirect(url);
   }
   return NextResponse.next();
 }

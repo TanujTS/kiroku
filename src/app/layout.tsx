@@ -3,6 +3,8 @@ import { Space_Grotesk, Unbounded } from "next/font/google";
 import { Toaster } from "@/components/ui/sonner";
 import "./globals.css";
 import { ThemeProvider } from "next-themes";
+import { Suspense } from "react";
+import { UrlToast } from "@/components/url-toast";
 
 const unbounded = Unbounded({
   subsets: ["latin"],
@@ -32,6 +34,9 @@ export default function RootLayout({
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           {children}
           <Toaster />
+          <Suspense fallback={null}>
+            <UrlToast />
+          </Suspense>
         </ThemeProvider>
       </body>
     </html>
