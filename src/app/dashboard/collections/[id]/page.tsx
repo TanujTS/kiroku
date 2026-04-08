@@ -1,10 +1,10 @@
-import { IconFolder as Folder, IconArrowRight as MoveRight } from "@tabler/icons-react";
+import { IconFolder as Folder } from "@tabler/icons-react";
 import { headers } from "next/headers";
-import Link from "next/link";
 import { notFound } from "next/navigation";
-import { Badge } from "@/components/ui/badge";
+import { PostListItem } from "@/components/dashboard/post-list-item";
 import { Button } from "@/components/ui/button";
 import { auth, prisma } from "@/lib/auth";
+import { getRelativeTimeString } from "@/lib/utils";
 
 export default async function CollectionPage({ params }: { params: Promise<{ id: string }> }) {
   const resolvedParams = await params;
@@ -86,66 +86,24 @@ export default async function CollectionPage({ params }: { params: Promise<{ id:
             </div>
           ) : (
             collection.posts.map(({ post }) => {
-              const formattedDate = post.createdAt
-                .toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })
-                .toUpperCase();
-              const words = post.content.split(/\s+/).length;
-              const readTime = Math.ceil(words / 200) + " MIN READ";
+              const rtf = getRelativeTimeString(post.createdAt);
+              const readTime =
+                Math.max(1, Math.ceil(post.content.split(/\s+/).length / 200)) +
+                " min read estimated";
 
               return (
-                <div
+                <PostListItem
                   key={post.id}
-                  className="group relative flex flex-col md:flex-row md:items-start justify-between gap-8 py-4 border-b border-border/5 last:border-0 hover:bg-muted/10 transition-colors -mx-6 px-6 rounded-2xl cursor-pointer"
-                >
-                  <div className="flex-1 max-w-2xl">
-                    <div className="flex items-center gap-2 text-[10px] font-sans font-bold uppercase tracking-widest text-muted-foreground/60 mb-3">
-                      <span>{formattedDate}</span>
-                      <span>•</span>
-                      <span>{readTime}</span>
-                    </div>
-
-                    <h3 className="text-3xl font-heading font-bold tracking-tight text-foreground mb-4">
-                      {post.title}
-                    </h3>
-
-                    {/* For some posts, we show a snippet */}
-                    {post.content.length > 200 && (
-                      <div className="mb-6">
-                        <p className="text-sm font-sans text-muted-foreground leading-relaxed line-clamp-3">
-                          {post.content.substring(0, 300)}...
-                        </p>
-                        <span className="text-xs font-sans font-bold text-primary inline-flex items-center gap-1 mt-3">
-                          Read Full Entry <MoveRight className="size-3" />
-                        </span>
-                      </div>
-                    )}
-
-                    {/* Empty state if no tags but keep spacing */}
-                    {!post.content.length && <div className="h-6" />}
-                  </div>
-
-                  <div className="flex flex-col md:items-end justify-between gap-6 md:h-full shrink-0">
-                    <div className="flex gap-2 flex-wrap justify-end">
-                      {post.tags.map((t) => (
-                        <Badge
-                          key={t.tag.id}
-                          variant="secondary"
-                          className="bg-muted/50 font-sans text-[10px] uppercase tracking-widest text-muted-foreground hover:bg-muted font-bold rounded-full px-3"
-                        >
-                          {t.tag.name}
-                        </Badge>
-                      ))}
-                    </div>
-
-                    <div className="hidden md:flex size-10 rounded-full border border-border/30 items-center justify-center text-muted-foreground group-hover:text-foreground group-hover:border-foreground/20 transition-all mt-auto">
-                      <MoveRight className="size-4" />
-                    </div>
-                  </div>
-
-                  <Link href={`/read/${post.slug}`} className="absolute inset-0 z-10">
-                    <span className="sr-only">View entry</span>
-                  </Link>
-                </div>
+                  post={{
+                    id: post.id,
+                    title: post.title || "Untitled",
+                    category: post.tags[0]?.tag.name,
+                    date: `Published ${rtf}`,
+                    readTime,
+                  }}
+                  href={`/read/${post.slug}`}
+                  actionLabel="Read Entry"
+                />
               );
             })
           )}
