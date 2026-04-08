@@ -1,6 +1,7 @@
 import { IconPlus as Plus } from "@tabler/icons-react";
 import { headers } from "next/headers";
 import Link from "next/link";
+import { CreateCollectionModal } from "@/components/dashboard/create-collection-modal";
 import { Card } from "@/components/ui/card";
 import { auth, prisma } from "@/lib/auth";
 
@@ -102,17 +103,21 @@ export default async function CollectionsPage() {
         </div>
 
         {/* Create New Collection Card */}
-        <Card className="rounded-3xl border border-dashed border-border/80 bg-transparent shadow-none p-12 flex flex-col items-center justify-center text-center hover:bg-muted/30 transition-colors cursor-pointer group">
-          <div className="size-12 rounded-full bg-secondary/10 text-secondary flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-            <Plus className="size-5 font-bold" />
-          </div>
-          <h4 className="text-xl font-heading font-bold text-foreground mb-2">
-            Create New Collection
-          </h4>
-          <p className="text-sm font-sans text-muted-foreground leading-relaxed">
-            Start a new thematic journey today.
-          </p>
-        </Card>
+        <CreateCollectionModal>
+          <button className="text-left w-full h-full focus:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-3xl">
+            <Card className="rounded-3xl border border-dashed border-border/80 bg-transparent shadow-none p-12 flex flex-col items-center justify-center text-center hover:bg-muted/30 transition-colors cursor-pointer group h-full">
+              <div className="size-12 rounded-full bg-secondary/10 text-secondary flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                <Plus className="size-5 font-bold" />
+              </div>
+              <h4 className="text-xl font-heading font-bold text-foreground mb-2">
+                Create New Collection
+              </h4>
+              <p className="text-sm font-sans text-muted-foreground leading-relaxed">
+                Start a new thematic journey today.
+              </p>
+            </Card>
+          </button>
+        </CreateCollectionModal>
       </div>
     </div>
   );

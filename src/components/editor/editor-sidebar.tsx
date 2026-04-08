@@ -3,17 +3,9 @@
 import { IconGlobe, IconLink, IconLock, IconPlus, IconX } from "@tabler/icons-react";
 import { motion } from "framer-motion";
 import { useState } from "react";
-import { toast } from "sonner";
-import { createCollectionAction } from "@/actions/collection";
+import { CreateCollectionModal } from "@/components/dashboard/create-collection-modal";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import {
@@ -54,32 +46,12 @@ export function EditorSidebar({
   const [tagInput, setTagInput] = useState("");
   const [isTagPopoverOpen, setIsTagPopoverOpen] = useState(false);
 
-  // Dialog State
-  const [isCollectionDialogOpen, setIsCollectionDialogOpen] = useState(false);
-  const [newCollectionTitle, setNewCollectionTitle] = useState("");
-  const [newCollectionDescription, setNewCollectionDescription] = useState("");
-  const [isCreatingCollection, setIsCreatingCollection] = useState(false);
+  // No inline state needed for modal anymore
 
-  const handleCreateCollection = async () => {
-    if (!newCollectionTitle.trim()) return;
-    setIsCreatingCollection(true);
-    const res = await createCollectionAction({
-      title: newCollectionTitle,
-      description: newCollectionDescription,
-    });
-    setIsCreatingCollection(false);
-
-    if (res.success && res.collection) {
-      toast.success("Collection created");
-      const newColList = [...(collections || []), res.collection];
-      onCollectionsChange?.(newColList);
-      onCollectionChange(res.collection.id);
-      setIsCollectionDialogOpen(false);
-      setNewCollectionTitle("");
-      setNewCollectionDescription("");
-    } else {
-      toast.error(res.error || "Failed to create collection");
-    }
+  const handleCollectionSuccess = (newCollection: { id: string; title: string }) => {
+    const newColList = [...(collections || []), newCollection];
+    onCollectionsChange?.(newColList);
+    onCollectionChange(newCollection.id);
   };
 
   const removeTag = (tagToRemove: string) => {
@@ -161,53 +133,11 @@ export function EditorSidebar({
             <h3 className="text-xs font-heading font-bold uppercase tracking-widest text-secondary">
               Collection
             </h3>
-            <Dialog open={isCollectionDialogOpen} onOpenChange={setIsCollectionDialogOpen}>
-              <DialogTrigger asChild>
-                <button className="text-muted-foreground hover:text-foreground transition-colors">
-                  <IconPlus className="size-4" />
-                </button>
-              </DialogTrigger>
-              <DialogContent className="sm:max-w-[425px] rounded-3xl border border-border/40 shadow-2xl p-8 bg-card">
-                <DialogHeader>
-                  <DialogTitle className="font-heading font-bold text-2xl mb-2 text-foreground">
-                    New Collection
-                  </DialogTitle>
-                </DialogHeader>
-                <div className="grid gap-4 py-4">
-                  <div className="space-y-2">
-                    <label className="text-xs font-sans font-bold uppercase tracking-widest text-muted-foreground">
-                      Title
-                    </label>
-                    <Input
-                      value={newCollectionTitle}
-                      onChange={(e) => setNewCollectionTitle(e.target.value)}
-                      placeholder="e.g. Journey Log"
-                      className="font-sans rounded-xl h-11 bg-transparent"
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <label className="text-xs font-sans font-bold uppercase tracking-widest text-muted-foreground">
-                      Description (Optional)
-                    </label>
-                    <Input
-                      value={newCollectionDescription}
-                      onChange={(e) => setNewCollectionDescription(e.target.value)}
-                      placeholder="A short description..."
-                      className="font-sans rounded-xl h-11 bg-transparent"
-                    />
-                  </div>
-                </div>
-                <div className="flex justify-end pt-4">
-                  <Button
-                    onClick={handleCreateCollection}
-                    disabled={isCreatingCollection || !newCollectionTitle.trim()}
-                    className="rounded-full font-sans font-semibold px-6 shadow-none"
-                  >
-                    {isCreatingCollection ? "Creating..." : "Create Collection"}
-                  </Button>
-                </div>
-              </DialogContent>
-            </Dialog>
+            <CreateCollectionModal onSuccess={handleCollectionSuccess}>
+              <button className="text-muted-foreground hover:text-foreground transition-colors">
+                <IconPlus className="size-4" />
+              </button>
+            </CreateCollectionModal>
           </div>
 
           <Select value={collection} onValueChange={onCollectionChange}>
