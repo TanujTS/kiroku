@@ -75,19 +75,6 @@ export default async function DashboardPage() {
 
         {/* Dashboard Post Grid */}
         <BentoGrid posts={posts} />
-
-        {/* Minimal Footer Inside Dashboard */}
-        <div className="mt-24 pt-10 border-t border-border/10 flex flex-col items-center justify-center opacity-60">
-          <span className="font-heading font-bold text-lg text-foreground mb-4">Kiroku</span>
-          <div className="flex gap-6 uppercase text-[10px] font-sans tracking-widest font-bold text-muted-foreground mb-6">
-            <span className="cursor-pointer hover:text-foreground transition-colors">Privacy</span>
-            <span className="cursor-pointer hover:text-foreground transition-colors">Terms</span>
-            <span className="cursor-pointer hover:text-foreground transition-colors">About</span>
-          </div>
-          <span className="text-[10px] font-sans text-muted-foreground/60 tracking-wider">
-            &copy; 2024 KIROKU. THE EDITORIAL BLOG.
-          </span>
-        </div>
       </div>
     </div>
   );

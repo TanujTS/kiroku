@@ -2,8 +2,9 @@
 
 import { AnimatePresence, motion } from "framer-motion";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "sonner";
+import { getUserCollectionsAction } from "@/actions/collection";
 import { createPostAction } from "@/actions/post";
 import { EditorSidebar } from "@/components/editor/editor-sidebar";
 import { EditorToolbar } from "@/components/editor/editor-toolbar";
@@ -17,7 +18,20 @@ export default function NewPostPage() {
   const [focusMode, setFocusMode] = useState(false);
   const [visibility, setVisibility] = useState<"private" | "unlisted" | "public">("private");
   const [isPublishing, setIsPublishing] = useState(false);
+  const [dynamicCollections, setDynamicCollections] = useState<{ id: string; title: string }[]>([]);
   const router = useRouter();
+
+  useEffect(() => {
+    getUserCollectionsAction().then((res) => {
+      if (res.success && res.collections) {
+        setDynamicCollections(res.collections);
+        // Set default collection if there are collections and current is 'daily-reflections'
+        if (res.collections.length > 0) {
+          setCollection((prev) => (prev === "daily-reflections" ? res.collections![0].id : prev));
+        }
+      }
+    });
+  }, []);
 
   const today = new Date()
     .toLocaleDateString("en-US", {
@@ -144,6 +158,8 @@ export default function NewPostPage() {
                 onCollectionChange={setCollection}
                 tags={tags}
                 onTagsChange={setTags}
+                collections={dynamicCollections}
+                onCollectionsChange={setDynamicCollections}
               />
             </motion.div>
           )}

@@ -3,8 +3,17 @@
 import { IconGlobe, IconLink, IconLock, IconPlus, IconX } from "@tabler/icons-react";
 import { motion } from "framer-motion";
 import { useState } from "react";
+import { toast } from "sonner";
+import { createCollectionAction } from "@/actions/collection";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import {
@@ -23,6 +32,8 @@ interface EditorSidebarProps {
   onCollectionChange: (value: string) => void;
   tags: string[];
   onTagsChange: (tags: string[]) => void;
+  collections?: { id: string; title: string }[];
+  onCollectionsChange?: (collections: { id: string; title: string }[]) => void;
 }
 
 const TAG_COLORS: Record<string, string> = {
@@ -37,9 +48,39 @@ export function EditorSidebar({
   onCollectionChange,
   tags,
   onTagsChange,
+  collections,
+  onCollectionsChange,
 }: EditorSidebarProps) {
   const [tagInput, setTagInput] = useState("");
   const [isTagPopoverOpen, setIsTagPopoverOpen] = useState(false);
+
+  // Dialog State
+  const [isCollectionDialogOpen, setIsCollectionDialogOpen] = useState(false);
+  const [newCollectionTitle, setNewCollectionTitle] = useState("");
+  const [newCollectionDescription, setNewCollectionDescription] = useState("");
+  const [isCreatingCollection, setIsCreatingCollection] = useState(false);
+
+  const handleCreateCollection = async () => {
+    if (!newCollectionTitle.trim()) return;
+    setIsCreatingCollection(true);
+    const res = await createCollectionAction({
+      title: newCollectionTitle,
+      description: newCollectionDescription,
+    });
+    setIsCreatingCollection(false);
+
+    if (res.success && res.collection) {
+      toast.success("Collection created");
+      const newColList = [...(collections || []), res.collection];
+      onCollectionsChange?.(newColList);
+      onCollectionChange(res.collection.id);
+      setIsCollectionDialogOpen(false);
+      setNewCollectionTitle("");
+      setNewCollectionDescription("");
+    } else {
+      toast.error(res.error || "Failed to create collection");
+    }
+  };
 
   const removeTag = (tagToRemove: string) => {
     onTagsChange(tags.filter((t) => t !== tagToRemove));
@@ -116,27 +157,75 @@ export function EditorSidebar({
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.5 }}
         >
-          <h3 className="text-xs font-heading font-bold uppercase tracking-widest text-secondary mb-5">
-            Collection
-          </h3>
+          <div className="flex items-center justify-between mb-5">
+            <h3 className="text-xs font-heading font-bold uppercase tracking-widest text-secondary">
+              Collection
+            </h3>
+            <Dialog open={isCollectionDialogOpen} onOpenChange={setIsCollectionDialogOpen}>
+              <DialogTrigger asChild>
+                <button className="text-muted-foreground hover:text-foreground transition-colors">
+                  <IconPlus className="size-4" />
+                </button>
+              </DialogTrigger>
+              <DialogContent className="sm:max-w-[425px] rounded-3xl border border-border/40 shadow-2xl p-8 bg-card">
+                <DialogHeader>
+                  <DialogTitle className="font-heading font-bold text-2xl mb-2 text-foreground">
+                    New Collection
+                  </DialogTitle>
+                </DialogHeader>
+                <div className="grid gap-4 py-4">
+                  <div className="space-y-2">
+                    <label className="text-xs font-sans font-bold uppercase tracking-widest text-muted-foreground">
+                      Title
+                    </label>
+                    <Input
+                      value={newCollectionTitle}
+                      onChange={(e) => setNewCollectionTitle(e.target.value)}
+                      placeholder="e.g. Journey Log"
+                      className="font-sans rounded-xl h-11 bg-transparent"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-xs font-sans font-bold uppercase tracking-widest text-muted-foreground">
+                      Description (Optional)
+                    </label>
+                    <Input
+                      value={newCollectionDescription}
+                      onChange={(e) => setNewCollectionDescription(e.target.value)}
+                      placeholder="A short description..."
+                      className="font-sans rounded-xl h-11 bg-transparent"
+                    />
+                  </div>
+                </div>
+                <div className="flex justify-end pt-4">
+                  <Button
+                    onClick={handleCreateCollection}
+                    disabled={isCreatingCollection || !newCollectionTitle.trim()}
+                    className="rounded-full font-sans font-semibold px-6 shadow-none"
+                  >
+                    {isCreatingCollection ? "Creating..." : "Create Collection"}
+                  </Button>
+                </div>
+              </DialogContent>
+            </Dialog>
+          </div>
 
           <Select value={collection} onValueChange={onCollectionChange}>
             <SelectTrigger className="w-full rounded-2xl bg-card border-none shadow-sm font-sans text-sm font-semibold h-11 text-foreground px-4">
               <SelectValue placeholder="Choose a collection" />
             </SelectTrigger>
             <SelectContent className="rounded-xl border-none shadow-lg">
-              <SelectItem value="daily-reflections" className="font-sans font-medium">
-                Daily Reflections
-              </SelectItem>
-              <SelectItem value="night-thoughts" className="font-sans font-medium">
-                Night Thoughts
-              </SelectItem>
-              <SelectItem value="dev-log" className="font-sans font-medium">
-                Dev Log
-              </SelectItem>
-              <SelectItem value="essays" className="font-sans font-medium">
-                Essays
-              </SelectItem>
+              {collections?.length ? (
+                collections.map((col) => (
+                  <SelectItem key={col.id} value={col.id} className="font-sans font-medium">
+                    {col.title}
+                  </SelectItem>
+                ))
+              ) : (
+                <div className="px-2 py-4 text-center text-sm font-sans text-muted-foreground">
+                  No collections yet.
+                </div>
+              )}
             </SelectContent>
           </Select>
 
