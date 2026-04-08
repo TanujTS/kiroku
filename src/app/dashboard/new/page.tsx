@@ -13,7 +13,7 @@ import { cn } from "@/lib/utils";
 export default function NewPostPage() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  const [collection, setCollection] = useState("daily-reflections");
+  const [collection, setCollection] = useState("none");
   const [tags, setTags] = useState(["Life", "Work"]);
   const [focusMode, setFocusMode] = useState(false);
   const [visibility, setVisibility] = useState<"private" | "unlisted" | "public">("private");
@@ -25,9 +25,9 @@ export default function NewPostPage() {
     getUserCollectionsAction().then((res) => {
       if (res.success && res.collections) {
         setDynamicCollections(res.collections);
-        // Set default collection if there are collections and current is 'daily-reflections'
+        // Set default collection if there are collections and current is 'none'
         if (res.collections.length > 0) {
-          setCollection((prev) => (prev === "daily-reflections" ? res.collections![0].id : prev));
+          setCollection((prev) => (prev === "none" ? res.collections![0].id : prev));
         }
       }
     });
@@ -57,6 +57,7 @@ export default function NewPostPage() {
         content,
         visibility,
         tags,
+        ...(collection && collection !== "none" ? { collectionId: collection } : {}),
       });
 
       if (result.success) {

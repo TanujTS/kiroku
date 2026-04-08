@@ -10,6 +10,7 @@ export async function createPostAction(data: {
   content: string;
   visibility: "private" | "unlisted" | "public";
   tags?: string[];
+  collectionId?: string;
 }) {
   try {
     const session = await auth.api.getSession({ headers: await headers() });
@@ -61,6 +62,13 @@ export async function createPostAction(data: {
                   },
                 },
               })),
+            }
+          : undefined,
+        collections: data.collectionId
+          ? {
+              create: {
+                collectionId: data.collectionId,
+              },
             }
           : undefined,
       },

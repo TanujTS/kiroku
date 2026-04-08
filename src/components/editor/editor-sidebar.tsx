@@ -145,17 +145,17 @@ export function EditorSidebar({
               <SelectValue placeholder="Choose a collection" />
             </SelectTrigger>
             <SelectContent className="rounded-xl border-none shadow-lg">
-              {collections?.length ? (
-                collections.map((col) => (
-                  <SelectItem key={col.id} value={col.id} className="font-sans font-medium">
-                    {col.title}
-                  </SelectItem>
-                ))
-              ) : (
-                <div className="px-2 py-4 text-center text-sm font-sans text-muted-foreground">
-                  No collections yet.
-                </div>
-              )}
+              <SelectItem
+                value="none"
+                className="font-sans font-medium text-muted-foreground italic"
+              >
+                No Collection
+              </SelectItem>
+              {collections?.map((col) => (
+                <SelectItem key={col.id} value={col.id} className="font-sans font-medium">
+                  {col.title}
+                </SelectItem>
+              ))}
             </SelectContent>
           </Select>
 
