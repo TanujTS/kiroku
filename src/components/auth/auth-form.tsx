@@ -122,8 +122,8 @@ export default function AuthForm() {
           </h1>
           <p className="text-muted-foreground font-sans text-sm md:text-base leading-relaxed pr-6">
             {isSignIn
-              ? "Please enter your details to access your sanctuary."
-              : "Create an account to build your quiet space."}
+              ? "Please enter your details to log in to your account."
+              : "Create an account to start writing."}
           </p>
         </motion.div>
 
@@ -144,7 +144,7 @@ export default function AuthForm() {
                 transition={{ duration: 0.3, ease: "easeInOut" }}
                 className="space-y-2 overflow-hidden"
               >
-                <label className="text-sm font-medium text-secondary/80 font-sans">Pen Name</label>
+                <label className="text-sm font-medium text-secondary/80 font-sans">Name</label>
                 <Input
                   type="text"
                   value={name}
@@ -200,7 +200,7 @@ export default function AuthForm() {
               disabled={isLoading}
               className="w-full rounded-full h-12 bg-secondary text-secondary-foreground hover:bg-secondary/90 font-semibold shadow-none cursor-pointer font-sans transition-transform active:scale-[0.98]"
             >
-              {isLoading ? "Signing in..." : isSignIn ? "Enter Sanctuary" : "Create Sanctuary"}
+              {isLoading ? "Signing in..." : isSignIn ? "Log In" : "Sign Up"}
             </Button>
           </motion.div>
         </motion.form>

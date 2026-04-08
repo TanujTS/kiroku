@@ -29,8 +29,8 @@ export default async function CollectionsPage() {
             Collections
           </h1>
           <p className="text-lg text-muted-foreground font-sans leading-relaxed">
-            Curated spaces for your recurring themes. Organize your journey through thematic lenses
-            and quiet reflections.
+            Curated spaces for your recurring themes. Organize your posts into specific categories
+            or series.
           </p>
         </div>
 
@@ -83,7 +83,7 @@ export default async function CollectionsPage() {
                       <span
                         className={`text-xs font-sans font-bold uppercase tracking-widest ${isFeatured ? "text-[#92A9E1]" : "text-secondary"}`}
                       >
-                        {collection._count.posts} Entries
+                        {collection._count.posts} Posts
                       </span>
 
                       {isFeatured && (

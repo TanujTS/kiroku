@@ -36,7 +36,7 @@ export default function AuthLeftCanvas() {
       <div className="relative z-10 max-w-lg mb-20 md:mb-32">
         <div className="text-[#F1EBE4] font-heading font-bold tracking-tight text-5xl md:text-6xl leading-[1.1] mb-6">
           <BlurText
-            text="Your Editorial Sanctuary."
+            text="Your Editorial Platform."
             delay={50}
             animateBy="words"
             direction="top"
@@ -49,8 +49,8 @@ export default function AuthLeftCanvas() {
           transition={{ duration: 0.8, delay: 0.8 }}
           className="text-white/80 font-sans text-lg md:text-xl leading-relaxed"
         >
-          A quiet space for intentional reflection. Curate your thoughts in an environment designed
-          for clarity and calm.
+          A modern space for your writing. Organize your posts in an environment designed for
+          clarity and calm.
         </motion.p>
       </div>
     </div>

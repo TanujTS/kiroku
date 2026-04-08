@@ -4,7 +4,7 @@ import AuthLeftCanvas from "@/components/auth/auth-left-canvas";
 
 export const metadata = {
   title: "Sign In | Kiroku",
-  description: "Enter your editorial sanctuary.",
+  description: "Log in to your account.",
 };
 
 export default function LoginPage() {
@@ -30,7 +30,7 @@ export default function LoginPage() {
         <div className="flex flex-col items-center justify-center mt-12 space-y-8">
           <div className="text-center text-[10px] sm:text-xs font-bold tracking-widest text-muted-foreground/60 uppercase">
             © 2026 Kiroku.
-            <br className="sm:hidden" /> Designed for the mindful observer.
+            <br className="sm:hidden" /> Designed for writers.
           </div>
         </div>
       </div>

@@ -36,7 +36,7 @@ export default function Hero() {
           className="font-heading font-medium tracking-tight text-secondary text-5xl md:text-7xl lg:text-[6rem] leading-[1.05] mb-8 max-w-5xl mx-auto"
         >
           <BlurText
-            text="A sanctuary for your thoughts."
+            text="A platform for your writing."
             delay={50}
             animateBy="words"
             direction="top"
@@ -46,7 +46,7 @@ export default function Hero() {
 
         <div className="font-sans text-muted-foreground text-lg md:text-xl max-w-2xl mx-auto mb-10 md:mb-14 justify-center text-center">
           <BlurText
-            text="Experience an editorial approach to personal writing. Where quietude meets modern craftsmanship."
+            text="Experience an editorial approach to blogging. Where content meets modern craftsmanship."
             delay={50}
             animateBy="words"
             direction="top"
@@ -71,7 +71,7 @@ export default function Hero() {
             size="lg"
             className="font-sans rounded-full px-8 text-base font-semibold bg-accent text-accent-foreground hover:bg-accent/80 border border-transparent h-14"
           >
-            Explore Chronicles
+            Explore Posts
           </Button>
         </motion.div>
       </motion.main>

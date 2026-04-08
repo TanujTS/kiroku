@@ -23,7 +23,7 @@ export default async function ProfilePage() {
           Author <span className="text-primary">Identity</span>
         </h1>
         <p className="text-base text-muted-foreground font-sans leading-relaxed mb-12">
-          Manage your pen name, digital footprint, and sanctuary preferences.
+          Manage your name, digital footprint, and blog preferences.
         </p>
 
         <div className="flex flex-col md:flex-row gap-12 items-start">
@@ -39,7 +39,7 @@ export default async function ProfilePage() {
               variant="outline"
               className="rounded-full shadow-none font-sans font-medium hover:bg-muted text-xs"
             >
-              Upload Custom Identity
+              Upload Profile Picture
             </Button>
           </div>
 
@@ -53,7 +53,7 @@ export default async function ProfilePage() {
               <div className="grid gap-6 sm:grid-cols-2">
                 <div className="space-y-2">
                   <label className="text-xs font-sans font-bold uppercase tracking-widest text-muted-foreground">
-                    Pen Name
+                    Name
                   </label>
                   <Input
                     defaultValue={user.name}
@@ -89,9 +89,9 @@ export default async function ProfilePage() {
 
               <div className="border border-destructive/20 rounded-2xl p-6 bg-destructive/5 flex flex-col sm:flex-row items-center justify-between gap-6">
                 <div>
-                  <h4 className="font-sans font-bold text-foreground mb-1">Abandon Sanctuary</h4>
+                  <h4 className="font-sans font-bold text-foreground mb-1">Delete Account</h4>
                   <p className="text-sm font-sans text-muted-foreground line-clamp-2">
-                    Permanently delete your entire archive, drafts, and config. This cannot be
+                    Permanently delete your entire account, posts, and settings. This cannot be
                     undone.
                   </p>
                 </div>

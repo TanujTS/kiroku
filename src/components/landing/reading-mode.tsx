@@ -140,8 +140,8 @@ export default function ReadingMode() {
               Curated Collections
             </h3>
             <p className="font-sans text-muted-foreground text-sm md:text-base leading-relaxed">
-              Group your entries into distinct chronicles—like "Night Thoughts" or "Dev Log". Keep
-              your mind and workspace uncluttered, easily returning to specific veins of thought.
+              Group your posts into distinct collections—like "Tutorials" or "Dev Log". Keep your
+              workspace uncluttered, easily returning to specific topics.
             </p>
           </div>
           <div className="md:w-1/2 flex items-center justify-center w-full min-h-[160px]">

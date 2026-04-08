@@ -49,8 +49,8 @@ export default async function DashboardPage() {
               Dashboard
             </h1>
             <p className="text-lg text-muted-foreground font-sans leading-relaxed">
-              Welcome to your sanctuary. Here lies the collective weight of your thoughts, organized
-              for quiet reflection and curated growth.
+              Welcome to your dashboard. Here are your latest posts, organized for easy management
+              and curated growth.
             </p>
           </div>
 
@@ -59,7 +59,7 @@ export default async function DashboardPage() {
             <div className="flex flex-col items-center justify-center size-24 rounded-full bg-card shadow-sm ring-1 ring-border/10">
               <span className="text-3xl font-heading font-bold text-secondary">{entriesCount}</span>
               <span className="text-[10px] font-sans font-bold uppercase tracking-widest text-muted-foreground mt-1">
-                Entries
+                Posts
               </span>
             </div>
             <div className="flex flex-col items-center justify-center size-24 rounded-full bg-card shadow-sm ring-1 ring-border/10">
@@ -85,7 +85,7 @@ export default async function DashboardPage() {
             <span className="cursor-pointer hover:text-foreground transition-colors">About</span>
           </div>
           <span className="text-[10px] font-sans text-muted-foreground/60 tracking-wider">
-            &copy; 2024 KIROKU. THE EDITORIAL SANCTUARY.
+            &copy; 2024 KIROKU. THE EDITORIAL BLOG.
           </span>
         </div>
       </div>
