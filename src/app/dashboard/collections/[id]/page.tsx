@@ -142,7 +142,7 @@ export default async function CollectionPage({ params }: { params: Promise<{ id:
                     </div>
                   </div>
 
-                  <Link href={`/dashboard/entries/${post.id}`} className="absolute inset-0 z-10">
+                  <Link href={`/read/${post.slug}`} className="absolute inset-0 z-10">
                     <span className="sr-only">View entry</span>
                   </Link>
                 </div>

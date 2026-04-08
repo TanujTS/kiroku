@@ -23,6 +23,7 @@ export default async function DashboardPage() {
 
   const posts = fetchedPosts.map((p) => ({
     id: p.id,
+    slug: p.slug,
     title: p.title,
     snippet: p.content.substring(0, 150) + "...",
     date: p.createdAt
