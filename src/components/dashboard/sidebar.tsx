@@ -79,13 +79,15 @@ export function Sidebar({
       </div>
 
       <div className="space-y-6">
-        <Button
-          className="w-full rounded-full gap-2 font-semibold h-12 shadow-none bg-secondary hover:bg-secondary/90 text-secondary-foreground"
-          size="lg"
-        >
-          <Plus className="size-4 font-sans" />
-          Write New
-        </Button>
+        <Link className="block" href="/dashboard/new">
+          <Button
+            className="w-full rounded-full gap-2 font-semibold h-12 shadow-none bg-secondary hover:bg-secondary/90 text-secondary-foreground"
+            size="lg"
+          >
+            <Plus className="size-4 font-sans" />
+            Write New
+          </Button>
+        </Link>
 
         <Link href="/dashboard/profile">
           <div className="flex items-center gap-3 p-3 rounded-2xl hover:bg-muted/40 transition-colors cursor-pointer ring-1 ring-border/20 bg-card">

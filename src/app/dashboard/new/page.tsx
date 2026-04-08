@@ -5,7 +5,6 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
 import { createPostAction } from "@/actions/post";
-import { TopNav } from "@/components/dashboard/top-nav";
 import { EditorSidebar } from "@/components/editor/editor-sidebar";
 import { EditorToolbar } from "@/components/editor/editor-toolbar";
 import { cn } from "@/lib/utils";
@@ -67,19 +66,6 @@ export default function NewPostPage() {
 
   return (
     <div className="flex min-h-screen flex-col bg-background overflow-x-hidden">
-      <AnimatePresence>
-        {!focusMode && (
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.3 }}
-          >
-            <TopNav />
-          </motion.div>
-        )}
-      </AnimatePresence>
-
       {/* Editor Canvas */}
       <div
         className={cn(

@@ -1,6 +1,5 @@
 /** biome-ignore-all lint/a11y/noLabelWithoutControl: WIP */
 
-import { TopNav } from "@/components/dashboard/top-nav";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -18,7 +17,6 @@ export default async function ProfilePage() {
 
   return (
     <div className="min-h-full flex flex-col">
-      <TopNav />
       {/* Content Canvas */}
       <div className="flex-1 p-10 lg:px-14 max-w-4xl pt-16">
         <h1 className="text-4xl font-heading font-extrabold tracking-tighter text-foreground mb-4">
