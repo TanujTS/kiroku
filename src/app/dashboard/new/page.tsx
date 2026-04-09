@@ -80,7 +80,7 @@ export default function NewPostPage() {
   };
 
   return (
-    <div className="flex min-h-screen flex-col bg-background overflow-x-hidden">
+    <div className="flex min-h-screen flex-col bg-background overflow-x-hidden animate-in fade-in slide-in-from-bottom-4 duration-500">
       {/* Editor Canvas */}
       <div
         className={cn(
@@ -119,7 +119,7 @@ export default function NewPostPage() {
           >
             <span className="flex items-center gap-2 text-xs font-sans font-semibold uppercase tracking-widest text-secondary">
               <span className="size-1.5 rounded-full bg-secondary" />
-              Drafting
+              Drafting..
             </span>
             <span className="text-xs text-muted-foreground/50 font-sans">/</span>
             <span className="text-xs font-sans font-medium uppercase tracking-widest text-muted-foreground">
@@ -136,7 +136,7 @@ export default function NewPostPage() {
             <textarea
               value={content}
               onChange={(e) => setContent(e.target.value)}
-              placeholder="Begin your reflection..."
+              placeholder="Begin your story..."
               className="w-full min-h-[50vh] bg-transparent font-serif text-xl leading-relaxed text-foreground placeholder:text-muted-foreground/50 outline-none border-none resize-none caret-secondary"
             />
           </motion.div>

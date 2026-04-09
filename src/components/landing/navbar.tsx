@@ -40,7 +40,7 @@ export default function Navbar() {
         <div>
           <Link href="/login">
             <Button className="rounded-full shadow-none font-sans font-semibold bg-secondary text-secondary-foreground hover:bg-secondary/90 transition-transform active:scale-[0.98]">
-              Enter Sanctuary
+              Login
             </Button>
           </Link>
         </div>

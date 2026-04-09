@@ -45,7 +45,7 @@ export default async function CollectionPage({ params }: { params: Promise<{ id:
   }
 
   return (
-    <div className="min-h-full flex flex-col">
+    <div className="min-h-full flex flex-col animate-in fade-in slide-in-from-bottom-4 duration-500">
       <div className="flex-1 p-10 lg:px-14 pb-32 pt-16 max-w-4xl">
         {/* Collection Header */}
         <div className="mb-20">

@@ -9,7 +9,7 @@ export const metadata = {
 
 export default function LoginPage() {
   return (
-    <div className="min-h-dvh flex flex-col lg:grid lg:grid-cols-2 bg-background">
+    <div className="min-h-dvh flex flex-col lg:grid lg:grid-cols-2 bg-background animate-in fade-in slide-in-from-bottom-4 duration-500">
       {/* Left Canvas - Branding & Waves (Client Component) */}
       <AuthLeftCanvas />
 

@@ -235,3 +235,12 @@
     @apply outline-2 outline-offset-2 outline-ring;
   }
 }
+
+/* ── Scrollbar-hide utility ── */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}

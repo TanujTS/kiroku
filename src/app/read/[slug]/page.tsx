@@ -47,7 +47,7 @@ export default async function ReadPostPage({ params }: { params: Promise<{ slug:
   const paragraphs = post.content.split(/\n\n+/).filter(Boolean);
 
   return (
-    <div className="min-h-screen flex flex-col bg-background font-sans text-foreground">
+    <div className="min-h-screen flex flex-col bg-background font-sans text-foreground animate-in fade-in slide-in-from-bottom-4 duration-500">
       {/* Top Banner (Distraction-Free) */}
       <div className="py-6 px-10 flex items-center justify-between border-b border-border/10 sticky top-0 bg-background/95 backdrop-blur-md z-50">
         <Link

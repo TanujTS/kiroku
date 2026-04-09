@@ -18,7 +18,9 @@ export default async function DashboardLayout({ children }: { children: React.Re
         collections={collections}
       />
       <div className="flex-1 flex flex-col min-w-0">
-        <main className="flex-1 h-screen overflow-y-auto w-full relative">{children}</main>
+        <main className="flex-1 h-screen overflow-y-auto w-full relative scrollbar-hide">
+          {children}
+        </main>
       </div>
     </div>
   );

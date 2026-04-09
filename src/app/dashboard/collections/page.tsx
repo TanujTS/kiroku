@@ -23,7 +23,7 @@ export default async function CollectionsPage() {
   });
 
   return (
-    <div className="min-h-full flex flex-col">
+    <div className="min-h-full flex flex-col animate-in fade-in slide-in-from-bottom-4 duration-500">
       <div className="flex-1 p-10 lg:px-14 pb-20 pt-16">
         <div className="max-w-2xl mb-16">
           <h1 className="text-5xl font-heading font-extrabold tracking-tighter text-foreground mb-6">
