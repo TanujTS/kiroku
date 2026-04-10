@@ -257,3 +257,28 @@
 .animate-pure-fade-in {
   animation: pure-fade-in 500ms ease-out;
 }
+
+/* ── Theme transition — vertical sweep (View Transition API) ── */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+/* Default: new on top (dark → light) */
+::view-transition-old(root) {
+  z-index: 1;
+}
+
+::view-transition-new(root) {
+  z-index: 9999;
+}
+
+/* Going to dark: old on top so we can sweep it away */
+[data-theme-transition="to-dark"]::view-transition-old(root) {
+  z-index: 9999;
+}
+
+[data-theme-transition="to-dark"]::view-transition-new(root) {
+  z-index: 1;
+}

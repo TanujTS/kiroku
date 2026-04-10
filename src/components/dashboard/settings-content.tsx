@@ -1,12 +1,12 @@
 "use client";
 
 import { IconDeviceDesktop, IconLock, IconMoon, IconSun } from "@tabler/icons-react";
-import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 import { Switch } from "@/components/ui/switch";
+import { useThemeTransition } from "@/hooks/use-theme-transition";
 import { cn } from "@/lib/utils";
 
 interface SettingsContentProps {
@@ -25,7 +25,7 @@ const themeOptions = [
 ] as const;
 
 export function SettingsContent({ user }: SettingsContentProps) {
-  const { theme, setTheme } = useTheme();
+  const { theme, setThemeWithTransition } = useThemeTransition();
   const [mounted, setMounted] = useState(false);
 
   // Privacy toggles
@@ -170,7 +170,7 @@ export function SettingsContent({ user }: SettingsContentProps) {
                 ? themeOptions.map(({ value, icon: Icon, label }) => (
                     <button
                       key={value}
-                      onClick={() => setTheme(value)}
+                      onClick={(e) => setThemeWithTransition(value, e)}
                       className={cn("flex flex-col items-center gap-3 group")}
                     >
                       <div

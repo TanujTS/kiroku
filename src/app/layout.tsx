@@ -35,9 +35,18 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${unbounded.variable} ${spaceGrotesk.variable} ${lora.variable}`}>
+    <html
+      lang="en"
+      suppressHydrationWarning
+      className={`${unbounded.variable} ${spaceGrotesk.variable} ${lora.variable}`}
+    >
       <body className={`antialiased`}>
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange={false}
+        >
           {children}
           <Toaster />
           <Suspense fallback={null}>
