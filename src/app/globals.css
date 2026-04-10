@@ -244,3 +244,16 @@
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
 }
+
+/* ── Pure opacity fade — no transforms, safe for sticky ── */
+@keyframes pure-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.animate-pure-fade-in {
+  animation: pure-fade-in 500ms ease-out;
+}

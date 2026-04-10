@@ -5,6 +5,7 @@ import {
   IconBook as BookOpen,
   IconFeather as Feather,
   IconFiles as Files,
+  IconSettings,
   IconPlus as Plus,
 } from "@tabler/icons-react";
 import Link from "next/link";
@@ -78,7 +79,7 @@ export function Sidebar({
         </div>
       </div>
 
-      <div className="space-y-6">
+      <div className="space-y-4">
         <Link className="block" href="/dashboard/new">
           <Button
             className="w-full rounded-full gap-2 font-semibold h-12 shadow-none bg-secondary hover:bg-secondary/90 text-secondary-foreground"
@@ -89,20 +90,31 @@ export function Sidebar({
           </Button>
         </Link>
 
+        <div className="flex items-center gap-3 p-3 rounded-2xl ring-1 ring-border/20 bg-card">
+          <Avatar className="size-10">
+            <AvatarImage src={user.image || ""} alt={user.name} />
+            <AvatarFallback className="bg-primary/20 text-primary font-heading font-medium">
+              {user.name.substring(0, 2).toUpperCase()}
+            </AvatarFallback>
+          </Avatar>
+          <div className="flex flex-col overflow-hidden">
+            <span className="text-sm font-sans font-semibold text-foreground truncate">
+              {user.name}
+            </span>
+            <span className="text-xs font-sans text-muted-foreground truncate">{user.role}</span>
+          </div>
+        </div>
+
         <Link href="/dashboard/profile">
-          <div className="flex items-center gap-3 p-3 rounded-2xl hover:bg-muted/40 transition-colors cursor-pointer ring-1 ring-border/20 bg-card">
-            <Avatar className="size-10">
-              <AvatarImage src={user.image || ""} alt={user.name} />
-              <AvatarFallback className="bg-primary/20 text-primary font-heading font-medium">
-                {user.name.substring(0, 2).toUpperCase()}
-              </AvatarFallback>
-            </Avatar>
-            <div className="flex flex-col overflow-hidden">
-              <span className="text-sm font-sans font-semibold text-foreground truncate">
-                {user.name}
-              </span>
-              <span className="text-xs font-sans text-muted-foreground truncate">{user.role}</span>
-            </div>
+          <div
+            className={`flex items-center gap-3 px-4 py-2.5 rounded-full font-sans text-sm font-medium transition-colors ${
+              pathname === "/dashboard/profile"
+                ? "bg-secondary/10 text-secondary"
+                : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
+            }`}
+          >
+            <IconSettings className="size-4" strokeWidth={2} />
+            Settings
           </div>
         </Link>
       </div>
