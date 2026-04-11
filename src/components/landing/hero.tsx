@@ -1,6 +1,8 @@
 "use client";
 
 import { motion, type Variants } from "framer-motion";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 import BlurText from "@/components/BlurText";
 import StarBorder from "@/components/StarBorder";
 import { Button } from "@/components/ui/button";
@@ -22,6 +24,8 @@ const itemVariants: Variants = {
 };
 
 export default function Hero() {
+  const router = useRouter();
+
   return (
     <div className="min-h-[calc(100dvh-80px)] bg-background text-foreground flex flex-col overflow-hidden">
       {/* Hero Content */}
@@ -64,14 +68,16 @@ export default function Hero() {
             className="border-none"
             speed="3s"
             thickness={4}
+            onClick={() => router.push("/dashboard/new")}
           >
             Start Writing
           </StarBorder>
           <Button
             size="lg"
             className="font-sans rounded-full px-8 text-base font-semibold bg-accent text-accent-foreground hover:bg-accent/80 border border-transparent h-14"
+            asChild
           >
-            Explore Posts
+            <Link href="/dashboard">Explore Posts</Link>
           </Button>
         </motion.div>
       </motion.main>

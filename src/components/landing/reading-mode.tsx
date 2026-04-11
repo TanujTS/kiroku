@@ -97,7 +97,7 @@ export default function ReadingMode() {
         {/* Adaptive Tones - Col Span 1 */}
         <MotionCard
           variants={fadeUpVariants}
-          className="group md:col-span-1 bg-primary text-primary-foreground border-transparent hover:bg-card hover:border-border/60 hover:shadow-sm transition-all duration-700 shadow-lg shadow-primary/20 rounded-3xl p-8 lg:p-10 flex flex-col justify-end min-h-[320px]"
+          className="group md:col-span-1 bg-primary text-primary-foreground border-transparent hover:bg-card hover:border-border/60 hover:shadow-sm transition-[background-color,border-color,box-shadow] duration-700 shadow-lg shadow-primary/20 rounded-3xl p-8 lg:p-10 flex flex-col justify-end min-h-[320px]"
         >
           <div className="mb-auto mt-2 relative size-10">
             <Moon className="absolute inset-0 size-10 text-primary-foreground/90 transition-all duration-700 rotate-0 scale-100 opacity-100 group-hover:-rotate-90 group-hover:scale-50 group-hover:opacity-0" />
