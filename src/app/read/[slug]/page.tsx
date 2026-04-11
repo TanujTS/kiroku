@@ -6,6 +6,7 @@ import {
 import { headers } from "next/headers";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { MarkdownRenderer } from "@/components/markdown-renderer";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { auth, prisma } from "@/lib/auth";
@@ -43,9 +44,6 @@ export default async function ReadPostPage({ params }: { params: Promise<{ slug:
     year: "numeric",
   });
 
-  // Format content logic: handle \n\n as paragraphs
-  const paragraphs = post.content.split(/\n\n+/).filter(Boolean);
-
   return (
     <div className="min-h-screen flex flex-col bg-background font-sans text-foreground animate-in fade-in slide-in-from-bottom-4 duration-500">
       {/* Top Banner (Distraction-Free) */}
@@ -77,7 +75,7 @@ export default async function ReadPostPage({ params }: { params: Promise<{ slug:
           {post.tags.map((t) => (
             <div key={t.tag.id} className="flex items-center gap-1.5">
               <span className="size-1 rounded-full bg-secondary hidden first:hidden md:block" />
-              <span className="text-[10px] uppercase font-bold tracking-widest text-[#92A9E1]">
+              <span className="text-[10px] uppercase font-bold tracking-widest text-secondary">
                 <span className="mr-1.5">•</span>
                 {t.tag.name}
               </span>
@@ -85,7 +83,7 @@ export default async function ReadPostPage({ params }: { params: Promise<{ slug:
           ))}
           {post.tags.length === 0 && (
             <div className="flex items-center gap-1.5">
-              <span className="text-[10px] uppercase font-bold tracking-widest text-[#92A9E1]">
+              <span className="text-[10px] uppercase font-bold tracking-widest text-secondary">
                 <span className="mr-1.5">•</span>REFLECTION
               </span>
             </div>
@@ -110,31 +108,8 @@ export default async function ReadPostPage({ params }: { params: Promise<{ slug:
           </div>
         </div>
 
-        {/* Content Body */}
-        {/* We use font-serif for full immersion, as shown ideally in reading flows */}
-        <article className="prose prose-lg md:prose-xl max-w-none font-serif text-muted-foreground leading-relaxed md:leading-loose">
-          {paragraphs.map((para, i) => {
-            // Very simple blockquote parser (if line starts with >)
-            if (para.trim().startsWith(">")) {
-              const quoteText = para.replace(/>/g, "").trim();
-              return (
-                <blockquote
-                  key={i}
-                  className="my-12 p-8 md:p-12 bg-muted/20 border-l-4 border-secondary rounded-r-3xl"
-                >
-                  <p className="text-2xl md:text-3xl font-heading font-bold text-secondary mb-4 leading-snug">
-                    "{quoteText}"
-                  </p>
-                </blockquote>
-              );
-            }
-            return (
-              <p key={i} className="mb-8">
-                {para}
-              </p>
-            );
-          })}
-        </article>
+        {/* Content Body — rendered Markdown */}
+        <MarkdownRenderer content={post.content} />
 
         {/* Footer Area */}
         <div className="mt-32 pt-12 border-t border-border/10">

@@ -1,13 +1,15 @@
 "use client";
 
+import type { Editor } from "@tiptap/react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { toast } from "sonner";
 import { getUserCollectionsAction } from "@/actions/collection";
 import { createPostAction } from "@/actions/post";
 import { EditorSidebar } from "@/components/editor/editor-sidebar";
 import { EditorToolbar } from "@/components/editor/editor-toolbar";
+import { TiptapEditor } from "@/components/editor/tiptap-editor";
 import { cn } from "@/lib/utils";
 
 export default function NewPostPage() {
@@ -19,6 +21,7 @@ export default function NewPostPage() {
   const [visibility, setVisibility] = useState<"private" | "unlisted" | "public">("private");
   const [isPublishing, setIsPublishing] = useState(false);
   const [dynamicCollections, setDynamicCollections] = useState<{ id: string; title: string }[]>([]);
+  const [editor, setEditor] = useState<Editor | null>(null);
   const router = useRouter();
 
   useEffect(() => {
@@ -31,6 +34,12 @@ export default function NewPostPage() {
         }
       }
     });
+  }, []);
+
+  const handleEditorReady = useCallback((editorInstance: Editor | null) => {
+    if (editorInstance) {
+      setEditor(editorInstance);
+    }
   }, []);
 
   const today = new Date()
@@ -127,17 +136,16 @@ export default function NewPostPage() {
             </span>
           </motion.div>
 
-          {/* Content Area */}
+          {/* Content Area — Tiptap Editor */}
           <motion.div
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.25, ease: [0.22, 1, 0.36, 1] }}
           >
-            <textarea
-              value={content}
-              onChange={(e) => setContent(e.target.value)}
-              placeholder="Begin your story..."
-              className="w-full min-h-[50vh] bg-transparent font-serif text-xl leading-relaxed text-foreground placeholder:text-muted-foreground/50 outline-none border-none resize-none caret-secondary"
+            <TiptapEditor
+              content={content}
+              onContentChange={setContent}
+              onEditorReady={handleEditorReady}
             />
           </motion.div>
         </motion.div>
@@ -169,6 +177,7 @@ export default function NewPostPage() {
 
       {/* Floating Bottom Toolbar */}
       <EditorToolbar
+        editor={editor}
         focusMode={focusMode}
         onFocusModeChange={setFocusMode}
         onPublish={handlePublish}

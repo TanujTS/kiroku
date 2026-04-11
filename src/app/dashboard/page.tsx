@@ -1,6 +1,7 @@
 import { headers } from "next/headers";
 import { BentoGrid } from "@/components/dashboard/bento-grid";
 import { auth, prisma } from "@/lib/auth";
+import { stripHtmlTags } from "@/lib/strip-html";
 
 export default async function DashboardPage() {
   const session = await auth.api.getSession({ headers: await headers() });
@@ -21,22 +22,25 @@ export default async function DashboardPage() {
     take: 6,
   });
 
-  const posts = fetchedPosts.map((p) => ({
-    id: p.id,
-    slug: p.slug,
-    title: p.title,
-    snippet: p.content.substring(0, 150) + "...",
-    date: p.createdAt
-      .toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })
-      .toUpperCase(),
-    readTime: Math.ceil(p.content.split(/\s+/).length / 200) + " MIN READ",
-    status:
-      p.visibility === "PRIVATE" ? "PRIVATE" : p.visibility === "PUBLIC" ? "PUBLIC" : "LINK-ONLY",
-    category: p.tags[0]?.tag.name || "THOUGHT",
-    tags: p.tags.map((t) => t.tag.name),
-    featured: false,
-    coverColor: "bg-muted",
-  }));
+  const posts = fetchedPosts.map((p) => {
+    const plainText = stripHtmlTags(p.content);
+    return {
+      id: p.id,
+      slug: p.slug,
+      title: p.title,
+      snippet: plainText.substring(0, 150) + "...",
+      date: p.createdAt
+        .toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })
+        .toUpperCase(),
+      readTime: Math.ceil(plainText.split(/\s+/).length / 200) + " MIN READ",
+      status:
+        p.visibility === "PRIVATE" ? "PRIVATE" : p.visibility === "PUBLIC" ? "PUBLIC" : "LINK-ONLY",
+      category: p.tags[0]?.tag.name || "THOUGHT",
+      tags: p.tags.map((t) => t.tag.name),
+      featured: false,
+      coverColor: "bg-muted",
+    };
+  });
   return (
     <div className="min-h-full flex flex-col animate-in fade-in slide-in-from-bottom-4 duration-500">
       {/* Content Canvas */}

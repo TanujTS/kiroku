@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { PostListItem } from "@/components/dashboard/post-list-item";
 import { Button } from "@/components/ui/button";
 import { auth, prisma } from "@/lib/auth";
+import { stripHtmlTags } from "@/lib/strip-html";
 import { getRelativeTimeString } from "@/lib/utils";
 
 export default async function CollectionPage({ params }: { params: Promise<{ id: string }> }) {
@@ -88,7 +89,7 @@ export default async function CollectionPage({ params }: { params: Promise<{ id:
             collection.posts.map(({ post }) => {
               const rtf = getRelativeTimeString(post.createdAt);
               const readTime =
-                Math.max(1, Math.ceil(post.content.split(/\s+/).length / 200)) +
+                Math.max(1, Math.ceil(stripHtmlTags(post.content).split(/\s+/).length / 200)) +
                 " min read estimated";
 
               return (

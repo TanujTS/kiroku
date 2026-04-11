@@ -1,6 +1,7 @@
 import { headers } from "next/headers";
 import { PostListItem } from "@/components/dashboard/post-list-item";
 import { auth, prisma } from "@/lib/auth";
+import { stripHtmlTags } from "@/lib/strip-html";
 import { getRelativeTimeString } from "@/lib/utils";
 
 export default async function DraftsPage() {
@@ -25,7 +26,9 @@ export default async function DraftsPage() {
       slug: p.slug || p.id,
       title: p.title || "Untitled Draft",
       date: `Edited ${rtf}`,
-      readTime: Math.max(1, Math.ceil(p.content.split(/\s+/).length / 200)) + " min read estimated",
+      readTime:
+        Math.max(1, Math.ceil(stripHtmlTags(p.content).split(/\s+/).length / 200)) +
+        " min read estimated",
       category: p.tags[0]?.tag.name,
     };
   });
