@@ -1,13 +1,16 @@
 "use client";
 
+import { IconLayoutDashboard } from "@tabler/icons-react";
 import { motion, useMotionValueEvent, useScroll } from "framer-motion";
 import Link from "next/link";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import { authClient } from "@/lib/auth-client";
 
 export default function Navbar() {
   const { scrollY } = useScroll();
   const [isScrolled, setIsScrolled] = useState(false);
+  const { data: session, isPending } = authClient.useSession();
 
   useMotionValueEvent(scrollY, "change", (latest) => {
     if (latest > 50) {
@@ -38,11 +41,22 @@ export default function Navbar() {
         </Link>
         {/* Desktop & Mobile Call to Action */}
         <div>
-          <Link href="/login">
-            <Button className="rounded-full shadow-none font-sans font-semibold bg-secondary text-secondary-foreground hover:bg-secondary/90 transition-transform active:scale-[0.98]">
-              Login
-            </Button>
-          </Link>
+          {isPending ? (
+            <div className="h-9 w-24 rounded-full bg-muted animate-pulse" />
+          ) : session ? (
+            <Link href="/dashboard">
+              <Button className="rounded-full shadow-none font-sans font-semibold bg-secondary text-secondary-foreground hover:bg-secondary/90 transition-transform active:scale-[0.98] gap-2">
+                <IconLayoutDashboard className="size-4" />
+                Dashboard
+              </Button>
+            </Link>
+          ) : (
+            <Link href="/login">
+              <Button className="rounded-full shadow-none font-sans font-semibold bg-secondary text-secondary-foreground hover:bg-secondary/90 transition-transform active:scale-[0.98]">
+                Login
+              </Button>
+            </Link>
+          )}
         </div>
       </div>
     </motion.header>

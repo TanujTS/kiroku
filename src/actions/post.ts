@@ -83,3 +83,40 @@ export async function createPostAction(data: {
     return { success: false, error: "Failed to create post." };
   }
 }
+
+export async function deletePostAction(postId: string) {
+  try {
+    const session = await auth.api.getSession({ headers: await headers() });
+
+    if (!session) {
+      return { success: false, error: "Unauthorized" };
+    }
+
+    const post = await prisma.post.findUnique({
+      where: { id: postId },
+      select: { authorId: true },
+    });
+
+    if (!post) {
+      return { success: false, error: "Post not found" };
+    }
+
+    if (post.authorId !== session.user.id) {
+      return { success: false, error: "Forbidden: You do not own this post" };
+    }
+
+    await prisma.post.delete({
+      where: { id: postId },
+    });
+
+    revalidatePath("/dashboard");
+    revalidatePath("/dashboard/drafts");
+
+    return { success: true };
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      return { success: false, error: error.message };
+    }
+    return { success: false, error: "Failed to delete post." };
+  }
+}
